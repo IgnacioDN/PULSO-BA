@@ -286,7 +286,7 @@ export function Hero({ events, locale }: Props) {
       </div>
 
       
-        href={photoCredits.heroObelisco.sourceUrl}
+       <a href={photoCredits.heroObelisco.sourceUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="absolute bottom-3 right-4 text-xs text-white/40 transition hover:text-white/70"
