@@ -22,7 +22,6 @@ const STEP_ORDER: Step[] = ["intro", "budget", "category", "zone", "results"];
 const BUDGET_OPTIONS: BudgetOption[] = ["free", "low", "mid", "any"];
 const CATEGORY_OPTIONS: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
 
-// Transición: la pantalla nueva entra desde la derecha, la vieja se va por la izquierda.
 const stepVariants = {
   enter: { opacity: 0, x: 24 },
   center: { opacity: 1, x: 0 },
@@ -79,18 +78,15 @@ export function Hero({ events, locale }: Props) {
 
   return (
     <section className="relative overflow-hidden bg-neutral-950 text-white">
-      {/* Foto real de fondo. Con priority porque es lo primero que se ve (LCP). */}
       <Image
         src={`${photoCredits.heroObelisco.url}?auto=format&fit=crop&w=2400&q=80`}
-        alt="" // decorativa: el contenido real está en el texto, no en la foto
+        alt=""
         fill
         priority
         sizes="100vw"
         className="object-cover object-center"
       />
 
-      {/* Oscurecido + degradé de marca por encima de la foto, para que el texto
-          blanco tenga contraste garantizado en cualquier foto que se use. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-neutral-950/70"
@@ -189,8 +185,6 @@ export function Hero({ events, locale }: Props) {
 
             {step === "zone" && (
               <div>
-                {/* Placeholder visual de mapa: el mapa interactivo real (MapLibre)
-                    llega en la fase 3. Por ahora, mostramos zonas como chips. */}
                 <div
                   aria-hidden="true"
                   className="mb-6 h-28 w-full rounded-2xl border border-white/10 bg-[linear-gradient(120deg,#1e293b,#334155)] bg-[length:20px_20px] bg-[radial-gradient(circle,rgba(255,255,255,0.15)_1px,transparent_1px)]"
@@ -291,7 +285,6 @@ export function Hero({ events, locale }: Props) {
         </AnimatePresence>
       </div>
 
- {/* Credito de la foto: requisito de buena practica, no de la licencia. */}
       
         href={photoCredits.heroObelisco.sourceUrl}
         target="_blank"
