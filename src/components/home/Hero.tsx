@@ -291,8 +291,8 @@ export function Hero({ events, locale }: Props) {
         </AnimatePresence>
       </div>
 
- {/* Credito de la foto: requisito de buena practica, no de la licencia. */}
-      
+      {/* Credito de la foto: requisito de buena practica, no de la licencia. */}
+      <a
         href={photoCredits.heroObelisco.sourceUrl}
         target="_blank"
         rel="noopener noreferrer"
