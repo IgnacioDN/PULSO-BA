@@ -1,0 +1,64 @@
+{
+  "Home": {
+    "title": "Pulso BA",
+    "subtitle": "La agenda viva de Buenos Aires",
+    "upcoming": "Próximos eventos",
+    "demoNotice": "Datos de demostración",
+    "free": "Gratis"
+  },
+  "Categories": {
+    "music": "Música",
+    "theater": "Teatro",
+    "food": "Gastronomía",
+    "nightlife": "Noche",
+    "art": "Arte",
+    "social": "Social"
+  },
+  "Nav": {
+    "brand": "Pulso BA",
+    "music": "Música",
+    "theater": "Teatro",
+    "food": "Gastronomía",
+    "nightlife": "Noche",
+    "art": "Arte",
+    "social": "Social",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "Hero": {
+    "eyebrow": "Pulso BA",
+    "question": "¿Qué querés hacer hoy?",
+    "subtitle": "Te hacemos tres preguntas cortas y armamos algo a tu medida. Nada de scrollear veinte minutos.",
+    "start": "Vamos",
+    "back": "Volver",
+    "stepOf": "Paso {current} de {total}",
+    "budget": {
+      "title": "¿Con qué presupuesto?",
+      "hint": "Por persona, aproximado.",
+      "free": "Gratis",
+      "low": "Hasta $15.000",
+      "mid": "Hasta $30.000",
+      "any": "Sin límite, quiero ver todo"
+    },
+    "category": {
+      "title": "¿Tenés ganas de algo en particular?",
+      "hint": "Podés elegir más de una, o ninguna.",
+      "any": "Sorprendeme"
+    },
+    "zone": {
+      "title": "¿Por qué zona te queda cómodo?",
+      "hint": "El mapa interactivo llega en la próxima versión. Por ahora, elegí el barrio.",
+      "any": "Cualquier zona"
+    },
+    "results": {
+      "title": "Esto armamos para vos",
+      "subtitleWithCount": "{count, plural, =0 {No encontramos nada con esa combinación} one {Encontramos # plan} other {Encontramos # planes}}",
+      "empty": "Probá aflojar algún filtro, seguro aparece algo lindo.",
+      "restart": "Empezar de nuevo",
+      "aiTitle": "¿No es lo que buscabas? Contanos con tus palabras",
+      "aiPlaceholder": "Ej: algo tranqui con música en vivo, no muy caro",
+      "aiSearch": "Buscar",
+      "aiNote": "Por ahora buscamos por palabras clave. Pronto un agente con IA va a entender el pedido completo."
+    }
+  }
+}

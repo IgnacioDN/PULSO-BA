@@ -1,0 +1,339 @@
+[
+  {
+    "id": "noche-de-trios",
+    "slug": "noche-de-trios",
+    "title": {
+      "es": "Noche de tríos",
+      "en": "Trio night"
+    },
+    "description": {
+      "es": "Dos tríos de jazz en formato íntimo, con la sala a media luz y cocina hasta tarde.",
+      "en": "Two jazz trios in an intimate setting, dim lights and a kitchen open late."
+    },
+    "category": "music",
+    "vibeId": "jazz-de-sotano",
+    "venueId": "sala-tinta-azul",
+    "startsAt": "2026-10-09T21:30:00-03:00",
+    "priceRange": {
+      "min": 18000,
+      "max": 25000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "jazz",
+      "música en vivo",
+      "tranqui"
+    ],
+    "lineup": [
+      "Trío Marea",
+      "Lucía Farías Quinteto"
+    ]
+  },
+  {
+    "id": "atardecer-en-la-terraza",
+    "slug": "atardecer-en-la-terraza",
+    "title": {
+      "es": "Atardecer en la terraza",
+      "en": "Sunset on the terrace"
+    },
+    "description": {
+      "es": "Selección de música downtempo mientras cae el sol sobre Palermo, con tragos de estación.",
+      "en": "Downtempo music as the sun sets over Palermo, with seasonal cocktails."
+    },
+    "category": "music",
+    "vibeId": "primavera-en-la-terraza",
+    "venueId": "terraza-jacaranda",
+    "startsAt": "2026-10-11T18:00:00-03:00",
+    "priceRange": {
+      "min": 12000,
+      "max": 15000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "downtempo",
+      "aire libre",
+      "atardecer"
+    ],
+    "lineup": [
+      "DJ Almendra"
+    ]
+  },
+  {
+    "id": "el-ultimo-telon",
+    "slug": "el-ultimo-telon",
+    "title": {
+      "es": "El último telón",
+      "en": "The last curtain"
+    },
+    "description": {
+      "es": "Drama en un acto sobre una compañía de teatro que se despide de su sala histórica.",
+      "en": "A one-act drama about a theater company saying goodbye to its historic venue."
+    },
+    "category": "theater",
+    "vibeId": "escena-dramatica",
+    "venueId": "teatro-del-farol",
+    "startsAt": "2026-10-14T20:30:00-03:00",
+    "priceRange": {
+      "min": 15000,
+      "max": 22000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "drama",
+      "teatro independiente"
+    ]
+  },
+  {
+    "id": "cena-de-pasos-de-estacion",
+    "slug": "cena-de-pasos-de-estacion",
+    "title": {
+      "es": "Cena de pasos de estación",
+      "en": "Seasonal tasting dinner"
+    },
+    "description": {
+      "es": "Menú de siete pasos con productos de estación y maridaje de vinos argentinos.",
+      "en": "Seven-course menu with seasonal produce and Argentine wine pairing."
+    },
+    "category": "food",
+    "vibeId": "sobremesa-larga",
+    "venueId": "bodegon-la-aurora",
+    "startsAt": "2026-10-16T21:00:00-03:00",
+    "priceRange": {
+      "min": 45000,
+      "max": 60000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "cena",
+      "maridaje",
+      "cocina de autor"
+    ]
+  },
+  {
+    "id": "noche-electrica-vol-3",
+    "slug": "noche-electrica-vol-3",
+    "title": {
+      "es": "Noche Eléctrica vol. 3",
+      "en": "Electric Night vol. 3"
+    },
+    "description": {
+      "es": "Una madrugada de techno y house con visuales en vivo y pista abierta hasta el amanecer.",
+      "en": "An all-night techno and house session with live visuals and a dance floor open until sunrise."
+    },
+    "category": "nightlife",
+    "vibeId": "noche-electrica",
+    "venueId": "club-medianoche-sur",
+    "startsAt": "2026-10-17T23:59:00-03:00",
+    "priceRange": {
+      "min": 20000,
+      "max": 30000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "techno",
+      "house",
+      "visuales"
+    ],
+    "lineup": [
+      "Nébula",
+      "Kuru",
+      "Ana Sintética"
+    ]
+  },
+  {
+    "id": "inauguracion-luz-y-papel",
+    "slug": "inauguracion-luz-y-papel",
+    "title": {
+      "es": "Inauguración: Luz y Papel",
+      "en": "Opening: Light and Paper"
+    },
+    "description": {
+      "es": "Muestra colectiva de fotografía y papel intervenido, con brindis de apertura.",
+      "en": "Group show of photography and altered paper, with an opening toast."
+    },
+    "category": "art",
+    "vibeId": "arte-contemporaneo",
+    "venueId": "galeria-pasaje-27",
+    "startsAt": "2026-10-21T19:00:00-03:00",
+    "priceRange": {
+      "min": 0,
+      "max": 0,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "fotografía",
+      "muestra",
+      "inauguración"
+    ]
+  },
+  {
+    "id": "feria-de-diseno-del-riel",
+    "slug": "feria-de-diseno-del-riel",
+    "title": {
+      "es": "Feria de diseño del Riel",
+      "en": "Riel Design Fair"
+    },
+    "description": {
+      "es": "Más de 40 emprendimientos de diseño, ilustración y objetos, con food trucks y música suave.",
+      "en": "Over 40 design, illustration and object studios, with food trucks and mellow music."
+    },
+    "category": "social",
+    "vibeId": "domingo-de-feria",
+    "venueId": "mercado-del-riel",
+    "startsAt": "2026-10-25T11:00:00-03:00",
+    "priceRange": {
+      "min": 0,
+      "max": 3000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "feria",
+      "diseño",
+      "familia"
+    ]
+  },
+  {
+    "id": "cartas-a-nadie",
+    "slug": "cartas-a-nadie",
+    "title": {
+      "es": "Cartas a nadie",
+      "en": "Letters to no one"
+    },
+    "description": {
+      "es": "Monólogo íntimo sobre las cartas que nunca se enviaron y lo que quedó por decir.",
+      "en": "An intimate monologue about the letters never sent and what was left unsaid."
+    },
+    "category": "theater",
+    "vibeId": "melancolico-esperanzador",
+    "venueId": "teatro-del-farol",
+    "startsAt": "2026-10-28T21:00:00-03:00",
+    "priceRange": {
+      "min": 12000,
+      "max": 18000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "monólogo",
+      "íntimo"
+    ]
+  },
+  {
+    "id": "brunch-y-vinilos",
+    "slug": "brunch-y-vinilos",
+    "title": {
+      "es": "Brunch y vinilos",
+      "en": "Brunch and vinyl"
+    },
+    "description": {
+      "es": "Brunch de domingo con una selección de vinilos de soul y funk en la terraza.",
+      "en": "Sunday brunch with a soul and funk vinyl selection on the terrace."
+    },
+    "category": "food",
+    "vibeId": "primavera-en-la-terraza",
+    "venueId": "terraza-jacaranda",
+    "startsAt": "2026-11-01T11:30:00-03:00",
+    "priceRange": {
+      "min": 18000,
+      "max": 26000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "brunch",
+      "vinilos",
+      "soul"
+    ]
+  },
+  {
+    "id": "bolero-y-tango-de-madrugada",
+    "slug": "bolero-y-tango-de-madrugada",
+    "title": {
+      "es": "Bolero y tango de madrugada",
+      "en": "Late-night bolero and tango"
+    },
+    "description": {
+      "es": "Una orquesta chica recorre boleros y tangos clásicos con arreglos nuevos.",
+      "en": "A small orchestra revisits classic boleros and tangos with fresh arrangements."
+    },
+    "category": "music",
+    "vibeId": "melancolico-esperanzador",
+    "venueId": "sala-tinta-azul",
+    "startsAt": "2026-11-06T22:00:00-03:00",
+    "priceRange": {
+      "min": 16000,
+      "max": 22000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "bolero",
+      "tango",
+      "música en vivo"
+    ],
+    "lineup": [
+      "Orquesta Chica del Sur"
+    ]
+  },
+  {
+    "id": "degustacion-de-vinos-del-sur",
+    "slug": "degustacion-de-vinos-del-sur",
+    "title": {
+      "es": "Degustación de vinos del sur",
+      "en": "Southern wines tasting"
+    },
+    "description": {
+      "es": "Cinco etiquetas patagónicas guiadas por un sommelier, con tabla de quesos y charla.",
+      "en": "Five Patagonian labels guided by a sommelier, with a cheese board and conversation."
+    },
+    "category": "food",
+    "vibeId": "sobremesa-larga",
+    "venueId": "bodegon-la-aurora",
+    "startsAt": "2026-11-12T20:00:00-03:00",
+    "priceRange": {
+      "min": 30000,
+      "max": 38000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "vino",
+      "degustación",
+      "patagonia"
+    ]
+  },
+  {
+    "id": "after-office-de-arte",
+    "slug": "after-office-de-arte",
+    "title": {
+      "es": "After office de arte",
+      "en": "Art after office"
+    },
+    "description": {
+      "es": "Recorrido guiado por la muestra en vigencia y encuentro social con tragos y música.",
+      "en": "Guided tour of the current show followed by a social gathering with drinks and music."
+    },
+    "category": "social",
+    "vibeId": "arte-contemporaneo",
+    "venueId": "galeria-pasaje-27",
+    "startsAt": "2026-11-19T19:30:00-03:00",
+    "priceRange": {
+      "min": 5000,
+      "max": 8000,
+      "currency": "ARS"
+    },
+    "images": [],
+    "tags": [
+      "after office",
+      "networking",
+      "arte"
+    ]
+  }
+]

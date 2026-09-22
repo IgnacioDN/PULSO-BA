@@ -1,0 +1,65 @@
+[
+  {
+    "id": "sala-tinta-azul",
+    "name": "Sala Tinta Azul",
+    "neighborhood": "San Telmo",
+    "address": "Dirección de demostración 123",
+    "lat": -34.6212,
+    "lng": -58.3715,
+    "images": []
+  },
+  {
+    "id": "teatro-del-farol",
+    "name": "Teatro del Farol",
+    "neighborhood": "Almagro",
+    "address": "Dirección de demostración 123",
+    "lat": -34.6045,
+    "lng": -58.4205,
+    "images": []
+  },
+  {
+    "id": "terraza-jacaranda",
+    "name": "Terraza Jacarandá",
+    "neighborhood": "Palermo",
+    "address": "Dirección de demostración 123",
+    "lat": -34.588,
+    "lng": -58.43,
+    "images": []
+  },
+  {
+    "id": "bodegon-la-aurora",
+    "name": "Bodegón La Aurora",
+    "neighborhood": "Villa Crespo",
+    "address": "Dirección de demostración 123",
+    "lat": -34.599,
+    "lng": -58.437,
+    "images": []
+  },
+  {
+    "id": "galeria-pasaje-27",
+    "name": "Galería Pasaje 27",
+    "neighborhood": "Recoleta",
+    "address": "Dirección de demostración 123",
+    "lat": -34.588,
+    "lng": -58.393,
+    "images": []
+  },
+  {
+    "id": "club-medianoche-sur",
+    "name": "Club Medianoche Sur",
+    "neighborhood": "Chacarita",
+    "address": "Dirección de demostración 123",
+    "lat": -34.588,
+    "lng": -58.455,
+    "images": []
+  },
+  {
+    "id": "mercado-del-riel",
+    "name": "Mercado del Riel",
+    "neighborhood": "Colegiales",
+    "address": "Dirección de demostración 123",
+    "lat": -34.574,
+    "lng": -58.449,
+    "images": []
+  }
+]

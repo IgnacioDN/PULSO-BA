@@ -1,0 +1,146 @@
+[
+  {
+    "id": "melancolico-esperanzador",
+    "label": {
+      "es": "Melancólico y esperanzador",
+      "en": "Bittersweet and hopeful"
+    },
+    "palette": [
+      "#F4A261",
+      "#264653",
+      "#E9C46A"
+    ],
+    "tags": [
+      "melancolía",
+      "nostalgia",
+      "esperanza",
+      "atardecer"
+    ]
+  },
+  {
+    "id": "noche-electrica",
+    "label": {
+      "es": "Noche eléctrica",
+      "en": "Electric night"
+    },
+    "palette": [
+      "#FF3CAC",
+      "#2B1055",
+      "#784BA0"
+    ],
+    "tags": [
+      "electrónica",
+      "baile",
+      "neón",
+      "madrugada"
+    ]
+  },
+  {
+    "id": "sobremesa-larga",
+    "label": {
+      "es": "Sobremesa larga",
+      "en": "Long table talk"
+    },
+    "palette": [
+      "#D4A373",
+      "#6B4423",
+      "#FAEDCD"
+    ],
+    "tags": [
+      "gastronomía",
+      "amigos",
+      "vino",
+      "charla"
+    ]
+  },
+  {
+    "id": "jazz-de-sotano",
+    "label": {
+      "es": "Jazz de sótano",
+      "en": "Basement jazz"
+    },
+    "palette": [
+      "#1D3557",
+      "#457B9D",
+      "#E63946"
+    ],
+    "tags": [
+      "jazz",
+      "intimidad",
+      "música en vivo",
+      "tranqui"
+    ]
+  },
+  {
+    "id": "primavera-en-la-terraza",
+    "label": {
+      "es": "Primavera en la terraza",
+      "en": "Spring on the terrace"
+    },
+    "palette": [
+      "#80B918",
+      "#FFD60A",
+      "#2B9348"
+    ],
+    "tags": [
+      "aire libre",
+      "terraza",
+      "luz",
+      "primavera"
+    ]
+  },
+  {
+    "id": "escena-dramatica",
+    "label": {
+      "es": "Escena dramática",
+      "en": "Dramatic stage"
+    },
+    "palette": [
+      "#9D0208",
+      "#370617",
+      "#FAA307"
+    ],
+    "tags": [
+      "teatro",
+      "drama",
+      "intensidad",
+      "telón"
+    ]
+  },
+  {
+    "id": "domingo-de-feria",
+    "label": {
+      "es": "Domingo de feria",
+      "en": "Sunday market"
+    },
+    "palette": [
+      "#F77F00",
+      "#FCBF49",
+      "#EAE2B7"
+    ],
+    "tags": [
+      "feria",
+      "familia",
+      "artesanías",
+      "paseo"
+    ]
+  },
+  {
+    "id": "arte-contemporaneo",
+    "label": {
+      "es": "Arte contemporáneo",
+      "en": "Contemporary art"
+    },
+    "palette": [
+      "#2A9D8F",
+      "#264653",
+      "#E9ECEF"
+    ],
+    "tags": [
+      "galería",
+      "arte",
+      "inauguración",
+      "minimal"
+    ]
+  }
+]
