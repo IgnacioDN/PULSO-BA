@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import {
@@ -13,6 +14,7 @@ import {
 } from "@/lib/filterEvents";
 import type { Category, EventWithRelations } from "@/lib/schemas";
 import { formatEventDate, formatPrice, localize } from "@/lib/format";
+import { photoCredits } from "@/lib/photoCredits";
 
 type Step = "intro" | "budget" | "category" | "zone" | "results";
 
@@ -77,10 +79,25 @@ export function Hero({ events, locale }: Props) {
 
   return (
     <section className="relative overflow-hidden bg-neutral-950 text-white">
-      {/* Fondo decorativo: degradé fijo, no depende de ninguna imagen externa. */}
+      {/* Foto real de fondo. Con priority porque es lo primero que se ve (LCP). */}
+      <Image
+        src={`${photoCredits.heroObelisco.url}?auto=format&fit=crop&w=2400&q=80`}
+        alt="" // decorativa: el contenido real está en el texto, no en la foto
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center"
+      />
+
+      {/* Oscurecido + degradé de marca por encima de la foto, para que el texto
+          blanco tenga contraste garantizado en cualquier foto que se use. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#7c3aed_0%,transparent_45%),radial-gradient(circle_at_80%_0%,#ec4899_0%,transparent_40%),radial-gradient(circle_at_50%_100%,#0ea5e9_0%,transparent_45%)] opacity-40"
+        className="pointer-events-none absolute inset-0 bg-neutral-950/70"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#7c3aed_0%,transparent_45%),radial-gradient(circle_at_80%_0%,#ec4899_0%,transparent_40%),radial-gradient(circle_at_50%_100%,#0ea5e9_0%,transparent_45%)] opacity-50 mix-blend-screen"
       />
 
       <div className="relative mx-auto flex min-h-[560px] w-full max-w-4xl flex-col justify-center px-4 py-16">
@@ -273,6 +290,16 @@ export function Hero({ events, locale }: Props) {
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Crédito de la foto: requisito de buena práctica, no de la licencia. */}
+      
+        href={photoCredits.heroObelisco.sourceUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-3 right-4 text-xs text-white/40 transition hover:text-white/70"
+      >
+        Foto: {photoCredits.heroObelisco.photographer} / Unsplash
+      </a>
     </section>
   );
 }
