@@ -1,27 +1,38 @@
 @import "tailwindcss";
 
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #14100d;
+  --foreground: #f4f1e8;
+
+
+  --brand-gold: #f0b429;
+  --brand-gold-dark: #8c3a12;
+  --brand-red: #c81d25;
+  --brand-blue: #1e5aa8;
+  --brand-green: #1b7a3d;
+  --brand-cream: #f4f1e8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-dark: var(--brand-gold-dark);
+  --color-brand-red: var(--brand-red);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-green: var(--brand-green);
+  --color-brand-cream: var(--brand-cream);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-museomoderno);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20240%20240%22%3E%3Cg%20fill=%22none%22%20stroke=%22%231e1a17%22%20stroke-width=%221.4%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%3E%3C%21--%20Obelisco,%20apenas%20inclinado%20--%3E%3Cg%20transform=%22translate(34%2028)%20rotate(-4)%22%3E%3Cpath%20d=%22M0%2062%20L6%2062%20L6%2014%20L3%200%20L0%2014%20Z%22%20/%3E%3Cline%20x1=%22-2%22%20y1=%2262%22%20x2=%228%22%20y2=%2262%22%20/%3E%3C/g%3E%3C%21--%20Mate%20con%20bombilla%20--%3E%3Cg%20transform=%22translate(150%2046)%20rotate(6)%22%3E%3Cpath%20d=%22M0%2018%20Q0%2034%2014%2034%20Q28%2034%2028%2018%20L28%204%20L0%204%20Z%22%20/%3E%3Cline%20x1=%224%22%20y1=%224%22%20x2=%2224%22%20y2=%224%22%20/%3E%3Cline%20x1=%2222%22%20y1=%228%22%20x2=%2240%22%20y2=%22-8%22%20/%3E%3C/g%3E%3C%21--%20Rulo%20tipo%20fileteado%20(acanto),%20dos%20espejados%20--%3E%3Cg%20transform=%22translate(56%20128)%22%3E%3Cpath%20d=%22M0%200%20C%2016%200%2016%2020%200%2020%20C%20-12%2020%20-12%2032%200%2032%22%20/%3E%3Ccircle%20cx=%220%22%20cy=%220%22%20r=%222.2%22%20fill=%22%231e1a17%22%20stroke=%22none%22%20/%3E%3Ccircle%20cx=%220%22%20cy=%2232%22%20r=%222.2%22%20fill=%22%231e1a17%22%20stroke=%22none%22%20/%3E%3C/g%3E%3Cg%20transform=%22translate(178%20150)%20scale(-1,1)%22%3E%3Cpath%20d=%22M0%200%20C%2016%200%2016%2020%200%2020%20C%20-12%2020%20-12%2032%200%2032%22%20/%3E%3Ccircle%20cx=%220%22%20cy=%220%22%20r=%222.2%22%20fill=%22%231e1a17%22%20stroke=%22none%22%20/%3E%3Ccircle%20cx=%220%22%20cy=%2232%22%20r=%222.2%22%20fill=%22%231e1a17%22%20stroke=%22none%22%20/%3E%3C/g%3E%3C%21--%20Roset%C3%B3n%20de%205%20puntas,%20chico%20--%3E%3Cg%20transform=%22translate(112%20190)%20rotate(10)%22%3E%3Cpath%20d=%22M0%20-12%20L3.5%20-4%20L12%20-3%20L5.5%203%20L7%2011.5%20L0%206.5%20L-7%2011.5%20L-5.5%203%20L-12%20-3%20L-3.5%20-4%20Z%22%20/%3E%3C/g%3E%3C%21--%20Bandone%C3%B3n%20simplificado%20--%3E%3Cg%20transform=%22translate(196%20100)%20rotate(-8)%22%3E%3Crect%20x=%220%22%20y=%220%22%20width=%2216%22%20height=%2210%22%20rx=%221.5%22%20/%3E%3Crect%20x=%220%22%20y=%2216%22%20width=%2216%22%20height=%2210%22%20rx=%221.5%22%20/%3E%3Cline%20x1=%222%22%20y1=%2210%22%20x2=%222%22%20y2=%2216%22%20/%3E%3Cline%20x1=%226%22%20y1=%2210%22%20x2=%226%22%20y2=%2216%22%20/%3E%3Cline%20x1=%2210%22%20y1=%2210%22%20x2=%2210%22%20y2=%2216%22%20/%3E%3Cline%20x1=%2214%22%20y1=%2210%22%20x2=%2214%22%20y2=%2216%22%20/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 240px 240px;
 }

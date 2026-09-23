@@ -135,8 +135,8 @@ function Chip({
       aria-pressed={selected}
       className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
         selected
-          ? "border-neutral-900 bg-neutral-900 text-white dark:border-white dark:bg-white dark:text-neutral-950"
-          : "border-black/15 hover:border-black/30 dark:border-white/20 dark:hover:border-white/40"
+          ? "border-brand-gold bg-brand-gold text-neutral-950"
+          : "border-white/15 text-white/80 hover:border-white/35"
       }`}
     >
       {label}

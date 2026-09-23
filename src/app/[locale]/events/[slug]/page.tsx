@@ -71,7 +71,7 @@ export default async function EventDetailPage({ params }: Props) {
                     {event.lineup.map((act) => (
                       <li
                         key={act}
-                        className="rounded-full border border-black/10 px-3 py-1 text-sm dark:border-white/15"
+                        className="rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-sm"
                       >
                         {act}
                       </li>
@@ -91,7 +91,7 @@ export default async function EventDetailPage({ params }: Props) {
               )}
             </div>
 
-            <aside className="h-fit rounded-2xl border border-black/10 p-5 dark:border-white/15">
+            <aside className="h-fit rounded-2xl border border-white/15 bg-white/[0.03] p-5">
               <dl className="space-y-4">
                 <div>
                   <dt className="text-xs font-semibold uppercase tracking-wide opacity-50">
