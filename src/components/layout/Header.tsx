@@ -16,11 +16,7 @@ export async function Header() {
 
         <nav aria-label={t("brand")} className="hidden gap-6 text-sm font-medium sm:flex">
           {NAV_CATEGORIES.map((category) => (
-            
-              key={category}
-              href={`#${category}`}
-              className="opacity-70 transition hover:opacity-100"
-            >
+            <a key={category} href={`#${category}`} className="opacity-70 transition hover:opacity-100">
               {t(category)}
             </a>
           ))}
