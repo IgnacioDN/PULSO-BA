@@ -32,20 +32,19 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 
   background-image:
-    radial-gradient(640px circle at 12% 18%, rgba(240, 180, 41, 0.16), transparent 60%),
-    radial-gradient(720px circle at 88% 28%, rgba(200, 29, 37, 0.13), transparent 60%),
-    radial-gradient(680px circle at 50% 92%, rgba(30, 90, 168, 0.15), transparent 60%);
+    radial-gradient(700px circle at 15% 15%, rgba(240, 180, 41, 0.09), transparent 60%),
+    radial-gradient(750px circle at 85% 95%, rgba(122, 16, 21, 0.12), transparent 60%);
   background-repeat: no-repeat;
-  background-size: 200% 200%;
-  animation: pulso-drift 30s ease-in-out infinite alternate;
+  background-size: 180% 180%;
+  animation: pulso-drift 45s ease-in-out infinite alternate;
 }
 
 @keyframes pulso-drift {
   0% {
-    background-position: 0% 0%, 100% 0%, 40% 100%;
+    background-position: 0% 0%, 100% 100%;
   }
   100% {
-    background-position: 12% 14%, 88% 18%, 55% 86%;
+    background-position: 8% 6%, 92% 94%;
   }
 }
 

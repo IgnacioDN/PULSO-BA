@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
@@ -24,6 +24,14 @@ const STEP_ORDER: Step[] = ["intro", "budget", "category", "zone", "results"];
 const BUDGET_OPTIONS: BudgetOption[] = ["free", "low", "mid", "any"];
 const CATEGORY_OPTIONS: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
 
+const QUERY_EXAMPLES = [
+  "jazz en San Telmo, no muy caro",
+  "planes gratis este finde",
+  "teatro under un viernes a la noche",
+  "algo de tango en Almagro",
+  "buena previa en Palermo",
+];
+
 const stepVariants = {
   enter: { opacity: 0, x: 24 },
   center: { opacity: 1, x: 0 },
@@ -41,6 +49,7 @@ export function Hero({ events, locale }: Props) {
   const [step, setStep] = useState<Step>("intro");
   const [filters, setFilters] = useState<WizardFilters>(EMPTY_FILTERS);
   const [query, setQuery] = useState("");
+  const [exampleIndex, setExampleIndex] = useState(0);
 
   const neighborhoods = useMemo(() => getNeighborhoods(events), [events]);
 
@@ -50,6 +59,13 @@ export function Hero({ events, locale }: Props) {
   }, [events, filters, query, locale]);
 
   const stepIndex = STEP_ORDER.indexOf(step);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setExampleIndex((i) => (i + 1) % QUERY_EXAMPLES.length);
+    }, 3200);
+    return () => window.clearInterval(id);
+  }, []);
 
   function goTo(next: Step) {
     setStep(next);
@@ -64,6 +80,11 @@ export function Hero({ events, locale }: Props) {
     setFilters(EMPTY_FILTERS);
     setQuery("");
     setStep("intro");
+  }
+
+  function handleConversationalSearch(e: React.FormEvent) {
+    e.preventDefault();
+    goTo("results");
   }
 
   function toggleCategory(category: Category) {
@@ -89,13 +110,10 @@ export function Hero({ events, locale }: Props) {
         className="object-cover object-center"
       />
 
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-neutral-950/70" />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-neutral-950/70"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,#7c3aed_0%,transparent_45%),radial-gradient(circle_at_80%_0%,#ec4899_0%,transparent_40%),radial-gradient(circle_at_50%_100%,#0ea5e9_0%,transparent_45%)] opacity-50 mix-blend-screen"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,#f0b429_0%,transparent_42%),radial-gradient(circle_at_85%_10%,#7a1015_0%,transparent_45%)] opacity-30 mix-blend-screen"
       />
 
       <div className="relative mx-auto flex min-h-[560px] w-full max-w-4xl flex-col justify-center px-4 py-16">
@@ -133,10 +151,32 @@ export function Hero({ events, locale }: Props) {
                 <h1 className="font-display font-bold text-4xl leading-tight tracking-tight sm:text-6xl">
                   {t("question")}
                 </h1>
-                <p className="mt-5 max-w-xl text-lg text-white/70">{t("subtitle")}</p>
-                <Button type="button" onClick={() => goTo("budget")} className="mt-8">
-                  {t("start")} →
-                </Button>
+                <p className="mt-5 max-w-xl text-lg text-white/70">{t("conversationalHint")}</p>
+
+                <form onSubmit={handleConversationalSearch} className="mt-8 max-w-xl">
+                  <div className="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 py-1.5 pl-4 pr-1.5 backdrop-blur-sm transition focus-within:border-brand-gold/60">
+                    <SparkleIcon className="h-5 w-5 shrink-0 text-brand-gold" />
+                    <input
+                      type="text"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder={QUERY_EXAMPLES[exampleIndex]}
+                      aria-label={t("conversationalHint")}
+                      className="min-w-0 flex-1 bg-transparent py-2 text-sm text-white placeholder-white/50 outline-none sm:text-base"
+                    />
+                    <Button type="submit" className="shrink-0">
+                      {t("results.aiSearch")}
+                    </Button>
+                  </div>
+                </form>
+
+                <button
+                  type="button"
+                  onClick={() => goTo("budget")}
+                  className="mt-4 text-sm font-medium text-white/60 underline-offset-4 transition hover:text-white hover:underline"
+                >
+                  {t("orStepByStep")}
+                </button>
               </div>
             )}
 
@@ -271,6 +311,14 @@ export function Hero({ events, locale }: Props) {
         Foto: {photoCredits.heroObelisco.photographer} / Unsplash
       </a>
     </section>
+  );
+}
+
+function SparkleIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+      <path d="M12 2 L14 9 L21 11 L14 13 L12 20 L10 13 L3 11 L10 9 Z" />
+    </svg>
   );
 }
 
