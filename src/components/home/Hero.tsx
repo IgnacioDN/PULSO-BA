@@ -15,6 +15,8 @@ import {
 import type { Category, EventWithRelations } from "@/lib/schemas";
 import { formatEventDate, formatPrice, localize } from "@/lib/format";
 import { photoCredits } from "@/lib/photoCredits";
+import { Button } from "@/components/ui/Button";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 
 type Step = "intro" | "budget" | "category" | "zone" | "results";
 
@@ -128,20 +130,13 @@ export function Hero({ events, locale }: Props) {
           >
             {step === "intro" && (
               <div>
-                <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-white/60">
-                  {t("eyebrow")}
-                </p>
-                <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl">
+                <h1 className="font-display font-bold text-4xl leading-tight tracking-tight sm:text-6xl">
                   {t("question")}
                 </h1>
                 <p className="mt-5 max-w-xl text-lg text-white/70">{t("subtitle")}</p>
-                <button
-                  type="button"
-                  onClick={() => goTo("budget")}
-                  className="mt-8 rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950 transition hover:bg-white/90"
-                >
+                <Button type="button" onClick={() => goTo("budget")} className="mt-8">
                   {t("start")} →
-                </button>
+                </Button>
               </div>
             )}
 
@@ -173,13 +168,9 @@ export function Hero({ events, locale }: Props) {
                     />
                   ))}
                 </StepGrid>
-                <button
-                  type="button"
-                  onClick={() => goTo("zone")}
-                  className="mt-8 rounded-full bg-white px-8 py-3 text-base font-semibold text-neutral-950 transition hover:bg-white/90"
-                >
+                <Button type="button" onClick={() => goTo("zone")} className="mt-8">
                   {t("start")} →
-                </button>
+                </Button>
               </div>
             )}
 
@@ -215,7 +206,7 @@ export function Hero({ events, locale }: Props) {
 
             {step === "results" && (
               <div>
-                <h2 className="text-2xl font-bold sm:text-3xl">{t("results.title")}</h2>
+                <SectionHeading className="text-2xl sm:text-3xl">{t("results.title")}</SectionHeading>
                 <p className="mt-2 text-white/70">
                   {t("results.subtitleWithCount", { count: results.length })}
                 </p>
@@ -262,23 +253,14 @@ export function Hero({ events, locale }: Props) {
                       placeholder={t("results.aiPlaceholder")}
                       className="flex-1 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white placeholder-white/40 outline-none focus:border-white/50"
                     />
-                    <button
-                      type="submit"
-                      className="rounded-full bg-white px-6 py-2 text-sm font-semibold text-neutral-950 transition hover:bg-white/90"
-                    >
-                      {t("results.aiSearch")}
-                    </button>
+                    <Button type="submit">{t("results.aiSearch")}</Button>
                   </form>
                   <p className="mt-2 text-xs text-white/50">{t("results.aiNote")}</p>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={restart}
-                  className="mt-6 text-sm font-medium text-white/70 underline-offset-4 transition hover:text-white hover:underline"
-                >
+                <Button type="button" variant="ghost" onClick={restart} className="mt-6 !px-0 hover:underline">
                   {t("results.restart")}
-                </button>
+                </Button>
               </div>
             )}
           </motion.div>
@@ -286,7 +268,7 @@ export function Hero({ events, locale }: Props) {
       </div>
 
       
-       <a href={photoCredits.heroObelisco.sourceUrl}
+        href={photoCredits.heroObelisco.sourceUrl}
         target="_blank"
         rel="noopener noreferrer"
         className="absolute bottom-3 right-4 text-xs text-white/40 transition hover:text-white/70"
@@ -308,7 +290,7 @@ function StepGrid({
 }) {
   return (
     <div>
-      <h2 className="text-2xl font-bold sm:text-3xl">{title}</h2>
+      <SectionHeading className="text-2xl sm:text-3xl">{title}</SectionHeading>
       <p className="mt-2 text-white/60">{hint}</p>
       <div className="mt-6 flex flex-wrap gap-3">{children}</div>
     </div>

@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { Header } from "@/components/layout/Header";
 import { Hero } from "@/components/home/Hero";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getEvents } from "@/lib/data";
 import { formatEventDate, formatPrice, localize } from "@/lib/format";
 import { photoCredits } from "@/lib/photoCredits";
@@ -17,7 +18,6 @@ export default async function HomePage({ params }: Props) {
   const tCategories = await getTranslations("Categories");
   const events = await getEvents();
 
-  // Eventos agrupados por categoria, para las anclas del header (#music, #theater, ...).
   const categories = Array.from(new Set(events.map((e) => e.category))) as Category[];
 
   return (
@@ -30,7 +30,7 @@ export default async function HomePage({ params }: Props) {
 
         {categories.map((category) => (
           <section key={category} id={category} className="mb-14 scroll-mt-20">
-            <h2 className="mb-4 text-xl font-semibold">{tCategories(category)}</h2>
+            <SectionHeading className="mb-4 text-xl">{tCategories(category)}</SectionHeading>
             <EventGrid
               events={events.filter((e) => e.category === category)}
               category={category}
@@ -40,7 +40,6 @@ export default async function HomePage({ params }: Props) {
           </section>
         ))}
 
-        {/* Creditos de fotos: requisito de buena practica, no de la licencia. */}
         <p className="mt-4 text-xs opacity-40">
           Fotos:{" "}
           {Object.values(photoCredits.category)
@@ -75,9 +74,6 @@ function EventGrid({
             key={event.id}
             className="overflow-hidden rounded-2xl border border-black/10 dark:border-white/15"
           >
-            {/* Foto real de la categoria, con el degrade de la vibra del evento
-                encima: mantiene la identidad de color sin que todas las
-                tarjetas de una misma categoria se vean identicas. */}
             <div className="relative h-32">
               <Image
                 src={`${categoryPhoto.url}?auto=format&fit=crop&w=800&q=70`}
