@@ -267,12 +267,7 @@ export function Hero({ events, locale }: Props) {
         </AnimatePresence>
       </div>
 
-      
-        href={photoCredits.heroObelisco.sourceUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute bottom-3 right-4 text-xs text-white/40 transition hover:text-white/70"
-      >
+      <a href={photoCredits.heroObelisco.sourceUrl} target="_blank" rel="noopener noreferrer" className="absolute bottom-3 right-4 text-xs text-white/40 transition hover:text-white/70">
         Foto: {photoCredits.heroObelisco.photographer} / Unsplash
       </a>
     </section>
