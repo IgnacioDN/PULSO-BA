@@ -23,10 +23,10 @@
     "art": "Arte",
     "social": "Social",
     "openMenu": "Abrir menú",
-    "closeMenu": "Cerrar menú"
+    "closeMenu": "Cerrar menú",
+    "catalog": "Catálogo"
   },
   "Hero": {
-    "eyebrow": "Pulso BA",
     "question": "¿Qué querés hacer hoy?",
     "subtitle": "Te hacemos tres preguntas cortas y armamos algo a tu medida. Nada de scrollear veinte minutos.",
     "start": "Vamos",
@@ -60,5 +60,27 @@
       "aiSearch": "Buscar",
       "aiNote": "Por ahora buscamos por palabras clave. Pronto un agente con IA va a entender el pedido completo."
     }
+  },
+  "Events": {
+    "title": "Catálogo",
+    "subtitle": "Filtrá por categoría, zona y presupuesto.",
+    "categoryLabel": "Categoría",
+    "zoneLabel": "Zona",
+    "budgetLabel": "Presupuesto",
+    "allCategories": "Todas",
+    "anyZone": "Cualquier zona",
+    "resultsCount": "{count, plural, =0 {Sin resultados} one {# evento} other {# eventos}}",
+    "empty": "Probá aflojar algún filtro.",
+    "anyBudget": "Cualquier presupuesto"
+  },
+  "EventDetail": {
+    "back": "Volver al catálogo",
+    "dateLabel": "Cuándo",
+    "venueLabel": "Dónde",
+    "priceLabel": "Precio",
+    "lineupLabel": "Line-up",
+    "notFoundTitle": "No encontramos este evento",
+    "notFoundBody": "Puede que ya haya pasado o que el link esté mal escrito.",
+    "backHome": "Volver al inicio"
   }
 }

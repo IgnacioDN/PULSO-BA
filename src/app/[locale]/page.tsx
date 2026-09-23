@@ -1,10 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import Image from "next/image";
 import { Header } from "@/components/layout/Header";
 import { Hero } from "@/components/home/Hero";
+import { EventCard } from "@/components/events/EventCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getEvents } from "@/lib/data";
-import { formatEventDate, formatPrice, localize } from "@/lib/format";
 import { photoCredits } from "@/lib/photoCredits";
 import type { Category } from "@/lib/schemas";
 
@@ -31,12 +30,15 @@ export default async function HomePage({ params }: Props) {
         {categories.map((category) => (
           <section key={category} id={category} className="mb-14 scroll-mt-20">
             <SectionHeading className="mb-4 text-xl">{tCategories(category)}</SectionHeading>
-            <EventGrid
-              events={events.filter((e) => e.category === category)}
-              category={category}
-              locale={locale}
-              freeLabel={t("free")}
-            />
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {events
+                .filter((e) => e.category === category)
+                .map((event) => (
+                  <li key={event.id}>
+                    <EventCard event={event} locale={locale} freeLabel={t("free")} />
+                  </li>
+                ))}
+            </ul>
           </section>
         ))}
 
@@ -49,58 +51,5 @@ export default async function HomePage({ params }: Props) {
         </p>
       </main>
     </>
-  );
-}
-
-function EventGrid({
-  events,
-  category,
-  locale,
-  freeLabel,
-}: {
-  events: Awaited<ReturnType<typeof getEvents>>;
-  category: Category;
-  locale: string;
-  freeLabel: string;
-}) {
-  const categoryPhoto = photoCredits.category[category];
-
-  return (
-    <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {events.map((event) => {
-        const [c1, c2, c3] = event.vibe.palette;
-        return (
-          <li
-            key={event.id}
-            className="overflow-hidden rounded-2xl border border-black/10 dark:border-white/15"
-          >
-            <div className="relative h-32">
-              <Image
-                src={`${categoryPhoto.url}?auto=format&fit=crop&w=800&q=70`}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
-                className="object-cover"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0"
-                style={{
-                  background: `linear-gradient(135deg, ${c1}cc, ${c2}99 60%, ${c3}66)`,
-                }}
-              />
-            </div>
-            <div className="space-y-1 p-4">
-              <p className="text-xs font-medium uppercase tracking-wide opacity-60">
-                {event.venue.neighborhood}
-              </p>
-              <h3 className="text-lg font-semibold">{localize(event.title, locale)}</h3>
-              <p className="text-sm opacity-70">{formatEventDate(event.startsAt, locale)}</p>
-              <p className="text-sm font-medium">{formatPrice(event.priceRange, locale, freeLabel)}</p>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
   );
 }
