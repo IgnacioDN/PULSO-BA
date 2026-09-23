@@ -49,31 +49,8 @@ body {
   }
 }
 
-.pulso-wordmark {
-  background-image: linear-gradient(100deg, var(--brand-gold) 35%, #fff3c4 50%, var(--brand-gold) 65%);
-  background-size: 260% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-stroke: 0.6px var(--brand-gold-dark);
-  animation: pulso-shine 6s ease-in-out infinite;
-}
-
-@keyframes pulso-shine {
-  0%, 75%, 100% {
-    background-position: 200% 0;
-  }
-  35% {
-    background-position: 0% 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   body {
     animation: none;
-  }
-  .pulso-wordmark {
-    animation: none;
-    background-position: 0% 0;
   }
 }

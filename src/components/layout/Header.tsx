@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { Flourish } from "@/components/ui/Flourish";
+import { CityBadge } from "@/components/ui/CityBadge";
 import type { Category } from "@/lib/schemas";
 
 const NAV_CATEGORIES: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
@@ -13,12 +13,10 @@ export async function Header() {
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4">
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-lg border border-brand-gold-dark/50 bg-black/25 px-3 py-1.5"
+          className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-white"
         >
-          <Flourish className="h-5 w-5 text-brand-gold" />
-          <span className="pulso-wordmark font-display font-bold text-lg tracking-tight">
-            {t("brand")}
-          </span>
+          <CityBadge className="h-7 w-7" />
+          <span className="font-display font-bold text-lg tracking-tight">{t("brand")}</span>
         </Link>
 
         <nav aria-label={t("brand")} className="hidden gap-6 text-sm font-medium sm:flex">

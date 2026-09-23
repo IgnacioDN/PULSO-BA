@@ -15,28 +15,40 @@ function prefersReducedMotion() {
 
 /**
  * Revela su contenido con un fade + leve desplazamiento hacia arriba cuando
- * entra en pantalla. Si el usuario tiene activado "reducir movimiento",
- * aparece directo.
+ * entra en pantalla. Tiene una red de seguridad: si por lo que sea el
+ * IntersectionObserver no llega a disparar (o no esta disponible), el
+ * contenido se muestra igual a los 1200ms.
  */
 export function Reveal({ children, className = "", delay = 0 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(prefersReducedMotion);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const node = ref.current;
-    if (!node || prefersReducedMotion()) return;
+    const fallback = window.setTimeout(() => setVisible(true), 1200);
+
+    if (!node || typeof IntersectionObserver === "undefined") {
+      return () => window.clearTimeout(fallback);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
           observer.disconnect();
+          window.clearTimeout(fallback);
         }
       },
-      { threshold: 0.15 },
+      { threshold: 0.1, rootMargin: "0px 0px -5% 0px" },
     );
     observer.observe(node);
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(fallback);
+    };
   }, []);
 
   return (
