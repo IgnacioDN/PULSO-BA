@@ -17,7 +17,7 @@ export function EventCard({ event, locale, freeLabel }: Props) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:-translate-y-0.5 hover:border-white/20 hover:shadow-lg"
+      className="block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:-translate-y-0.5 hover:border-brand-gold/40 hover:shadow-[0_0_28px_-10px_rgba(240,180,41,0.45)]"
     >
       <div className="relative h-32">
         <Image

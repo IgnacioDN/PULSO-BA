@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/Header";
 import { Hero } from "@/components/home/Hero";
 import { EventCard } from "@/components/events/EventCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Reveal } from "@/components/ui/Reveal";
 import { getEvents } from "@/lib/data";
 import { photoCredits } from "@/lib/photoCredits";
 import type { Category } from "@/lib/schemas";
@@ -29,13 +30,17 @@ export default async function HomePage({ params }: Props) {
 
         {categories.map((category) => (
           <section key={category} id={category} className="mb-14 scroll-mt-20">
-            <SectionHeading className="mb-4 text-xl">{tCategories(category)}</SectionHeading>
+            <Reveal>
+              <SectionHeading className="mb-4 text-xl">{tCategories(category)}</SectionHeading>
+            </Reveal>
             <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {events
                 .filter((e) => e.category === category)
-                .map((event) => (
+                .map((event, i) => (
                   <li key={event.id}>
-                    <EventCard event={event} locale={locale} freeLabel={t("free")} />
+                    <Reveal delay={(i % 3) * 90}>
+                      <EventCard event={event} locale={locale} freeLabel={t("free")} />
+                    </Reveal>
                   </li>
                 ))}
             </ul>

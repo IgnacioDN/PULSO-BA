@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { EventCard } from "@/components/events/EventCard";
+import { Reveal } from "@/components/ui/Reveal";
 import {
   EMPTY_FILTERS,
   filterEvents,
@@ -99,9 +100,11 @@ export function EventsCatalog({ events, locale }: Props) {
         <p className="opacity-60">{t("empty")}</p>
       ) : (
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {results.map((event) => (
+          {results.map((event, i) => (
             <li key={event.id}>
-              <EventCard event={event} locale={locale} freeLabel={tBudget("free")} />
+              <Reveal delay={(i % 6) * 70}>
+                <EventCard event={event} locale={locale} freeLabel={tBudget("free")} />
+              </Reveal>
             </li>
           ))}
         </ul>
