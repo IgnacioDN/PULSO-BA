@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { CityBadge } from "@/components/ui/CityBadge";
 import type { Category } from "@/lib/schemas";
 
 const NAV_CATEGORIES: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
@@ -15,7 +15,13 @@ export async function Header() {
           href="/"
           className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-white"
         >
-          <CityBadge className="h-7 w-7" />
+          <Image
+            src="/brand/buenos-aires-plaque.png"
+            alt=""
+            width={37}
+            height={28}
+            className="h-7 w-auto"
+          />
           <span className="font-display font-bold text-lg tracking-tight">{t("brand")}</span>
         </Link>
 

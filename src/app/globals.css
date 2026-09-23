@@ -21,7 +21,7 @@
   --color-brand-blue: var(--brand-blue);
   --color-brand-green: var(--brand-green);
   --color-brand-cream: var(--brand-cream);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-body);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-museomoderno);
 }
@@ -51,6 +51,27 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   body {
+    animation: none;
+  }
+}
+
+@keyframes pulso-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: pulso-rise 0.7s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
     animation: none;
   }
 }
