@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
 import { Hero } from "@/components/home/Hero";
+import { HowItWorks } from "@/components/home/HowItWorks";
 import { EventCard } from "@/components/events/EventCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
@@ -24,6 +25,7 @@ export default async function HomePage({ params }: Props) {
     <>
       <Header />
       <Hero events={events} locale={locale} />
+      <HowItWorks />
 
       <main className="mx-auto w-full max-w-6xl px-4 py-14">
         <p className="mb-8 text-sm opacity-50">{t("demoNotice")}</p>

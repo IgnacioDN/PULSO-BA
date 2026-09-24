@@ -74,3 +74,31 @@ body {
     animation: none;
   }
 }
+
+@keyframes pulso-breathe {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 3px rgba(240, 180, 41, 0.35)) drop-shadow(0 0 8px rgba(240, 180, 41, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(240, 180, 41, 0.85)) drop-shadow(0 0 22px rgba(240, 180, 41, 0.5))
+      drop-shadow(0 0 34px rgba(240, 180, 41, 0.25));
+  }
+}
+
+.pulso-neon {
+  color: var(--brand-gold);
+  animation: pulso-breathe 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulso-neon {
+    animation: none;
+    filter: drop-shadow(0 0 6px rgba(240, 180, 41, 0.5));
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-gold);
+  outline-offset: 2px;
+}

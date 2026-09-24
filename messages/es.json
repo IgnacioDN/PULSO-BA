@@ -59,7 +59,9 @@
       "aiPlaceholder": "Ej: algo tranqui con música en vivo, no muy caro",
       "aiSearch": "Buscar",
       "aiNote": "Por ahora buscamos por palabras clave. Pronto un agente con IA va a entender el pedido completo."
-    }
+    },
+    "orStepByStep": "¿Preferís elegir paso a paso?",
+    "conversationalHint": "Escribilo con tus palabras, como se lo contarías a un amigo."
   },
   "Events": {
     "title": "Catálogo",
@@ -82,5 +84,15 @@
     "notFoundTitle": "No encontramos este evento",
     "notFoundBody": "Puede que ya haya pasado o que el link esté mal escrito.",
     "backHome": "Volver al inicio"
+  },
+  "HowItWorks": {
+    "title": "Así funciona",
+    "subtitle": "Tres pasos, sin vueltas.",
+    "step1Title": "Contanos qué buscás",
+    "step1Body": "Escribilo con tus palabras: presupuesto, zona, tipo de plan.",
+    "step2Title": "Elegimos por vos",
+    "step2Body": "Cruzamos lo que pediste con la agenda real de la ciudad.",
+    "step3Title": "Vas al plan",
+    "step3Body": "Fecha, lugar y precio, listo para decidir en el momento."
   }
 }
