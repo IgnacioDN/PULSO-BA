@@ -27,7 +27,7 @@ export async function HowItWorks() {
               <li className="flex flex-col gap-2">
                 <span
                   aria-hidden="true"
-                  className="font-display text-3xl font-bold text-brand-gold/80"
+                  className="font-display text-3xl font-bold text-brand-celeste/80"
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>

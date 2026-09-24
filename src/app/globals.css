@@ -4,8 +4,8 @@
   --background: #1c1612;
   --foreground: #f4f1e8;
 
-  --brand-gold: #f0b429;
-  --brand-gold-dark: #8c3a12;
+  --brand-celeste: #38bdf8;
+  --brand-celeste-dark: #0369a1;
   --brand-red: #c81d25;
   --brand-blue: #1e5aa8;
   --brand-green: #1b7a3d;
@@ -15,8 +15,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-brand-gold: var(--brand-gold);
-  --color-brand-gold-dark: var(--brand-gold-dark);
+  --color-brand-celeste: var(--brand-celeste);
+  --color-brand-celeste-dark: var(--brand-celeste-dark);
   --color-brand-red: var(--brand-red);
   --color-brand-blue: var(--brand-blue);
   --color-brand-green: var(--brand-green);
@@ -32,7 +32,7 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 
   background-image:
-    radial-gradient(700px circle at 15% 15%, rgba(240, 180, 41, 0.09), transparent 60%),
+    radial-gradient(700px circle at 15% 15%, rgba(56, 189, 248, 0.09), transparent 60%),
     radial-gradient(750px circle at 85% 95%, rgba(122, 16, 21, 0.12), transparent 60%);
   background-repeat: no-repeat;
   background-size: 180% 180%;
@@ -78,27 +78,27 @@ body {
 @keyframes pulso-breathe {
   0%,
   100% {
-    filter: drop-shadow(0 0 3px rgba(240, 180, 41, 0.35)) drop-shadow(0 0 8px rgba(240, 180, 41, 0.2));
+    filter: drop-shadow(0 0 3px rgba(56, 189, 248, 0.35)) drop-shadow(0 0 8px rgba(56, 189, 248, 0.2));
   }
   50% {
-    filter: drop-shadow(0 0 8px rgba(240, 180, 41, 0.85)) drop-shadow(0 0 22px rgba(240, 180, 41, 0.5))
-      drop-shadow(0 0 34px rgba(240, 180, 41, 0.25));
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 22px rgba(56, 189, 248, 0.5))
+      drop-shadow(0 0 34px rgba(56, 189, 248, 0.25));
   }
 }
 
 .pulso-neon {
-  color: var(--brand-gold);
+  color: var(--brand-celeste);
   animation: pulso-breathe 3.2s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pulso-neon {
     animation: none;
-    filter: drop-shadow(0 0 6px rgba(240, 180, 41, 0.5));
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
   }
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand-gold);
+  outline: 2px solid var(--brand-celeste);
   outline-offset: 2px;
 }
