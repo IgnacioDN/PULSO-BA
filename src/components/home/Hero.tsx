@@ -23,6 +23,12 @@ const STEP_ORDER: Step[] = ["intro", "budget", "category", "zone", "results"];
 const BUDGET_OPTIONS: BudgetOption[] = ["free", "low", "mid", "any"];
 const CATEGORY_OPTIONS: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
 
+const HERO_IMAGES = [
+  { src: "/hero/hero-1-obelisco.jpg" },
+  { src: "/hero/hero-2-noche-museos.jpg" },
+  { src: "/hero/hero-3-planetario.jpg" },
+];
+
 const QUERY_EXAMPLES = [
   "jazz en San Telmo, no muy caro",
   "planes gratis este finde",
@@ -49,6 +55,7 @@ export function Hero({ events, locale }: Props) {
   const [filters, setFilters] = useState<WizardFilters>(EMPTY_FILTERS);
   const [query, setQuery] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const neighborhoods = useMemo(() => getNeighborhoods(events), [events]);
 
@@ -63,6 +70,14 @@ export function Hero({ events, locale }: Props) {
     const id = window.setInterval(() => {
       setExampleIndex((i) => (i + 1) % QUERY_EXAMPLES.length);
     }, 3200);
+    return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => {
+      setActiveSlide((i) => (i + 1) % HERO_IMAGES.length);
+    }, 6000);
     return () => window.clearInterval(id);
   }, []);
 
@@ -100,14 +115,19 @@ export function Hero({ events, locale }: Props) {
 
   return (
     <section className="relative overflow-hidden bg-neutral-950 text-white">
-      <Image
-        src="/hero/obelisco-noche.jpg"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
-      />
+      {HERO_IMAGES.map((image, i) => (
+        <Image
+          key={image.src}
+          src={image.src}
+          alt=""
+          fill
+          priority={i === 0}
+          sizes="100vw"
+          className={`object-cover object-center transition-opacity duration-[1500ms] ease-in-out ${
+            i === activeSlide ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
 
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-neutral-950/70" />
 
@@ -299,6 +319,21 @@ export function Hero({ events, locale }: Props) {
             )}
           </motion.div>
         </AnimatePresence>
+      </div>
+
+      <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+        {HERO_IMAGES.map((image, i) => (
+          <button
+            key={image.src}
+            type="button"
+            onClick={() => setActiveSlide(i)}
+            aria-label={`Foto ${i + 1} de ${HERO_IMAGES.length}`}
+            aria-current={i === activeSlide}
+            className={`h-1.5 rounded-full transition-all ${
+              i === activeSlide ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/60"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );
