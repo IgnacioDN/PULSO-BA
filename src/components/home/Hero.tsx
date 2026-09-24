@@ -14,7 +14,6 @@ import {
 } from "@/lib/filterEvents";
 import type { Category, EventWithRelations } from "@/lib/schemas";
 import { formatEventDate, formatPrice, localize } from "@/lib/format";
-import { photoCredits } from "@/lib/photoCredits";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -102,7 +101,7 @@ export function Hero({ events, locale }: Props) {
   return (
     <section className="relative overflow-hidden bg-neutral-950 text-white">
       <Image
-        src={`${photoCredits.heroObelisco.url}?auto=format&fit=crop&w=2400&q=80`}
+        src="/hero/obelisco-noche.jpg"
         alt=""
         fill
         priority
@@ -111,10 +110,6 @@ export function Hero({ events, locale }: Props) {
       />
 
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-neutral-950/70" />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,#f0b429_0%,transparent_42%),radial-gradient(circle_at_85%_10%,#7a1015_0%,transparent_45%)] opacity-30 mix-blend-screen"
-      />
 
       <div className="relative mx-auto flex min-h-[560px] w-full max-w-4xl flex-col justify-center px-4 py-16">
         {step !== "intro" && (
@@ -154,8 +149,7 @@ export function Hero({ events, locale }: Props) {
                 <p className="mt-5 max-w-xl text-lg text-white/70">{t("conversationalHint")}</p>
 
                 <form onSubmit={handleConversationalSearch} className="mt-8 max-w-xl">
-                  <div className="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 py-1.5 pl-4 pr-1.5 backdrop-blur-sm transition focus-within:border-brand-gold/60">
-                    <SparkleIcon className="h-5 w-5 shrink-0 text-brand-gold" />
+                  <div className="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 py-1.5 pl-5 pr-1.5 backdrop-blur-sm transition focus-within:border-white/50">
                     <input
                       type="text"
                       value={query}
@@ -306,19 +300,7 @@ export function Hero({ events, locale }: Props) {
           </motion.div>
         </AnimatePresence>
       </div>
-
-      <a href={photoCredits.heroObelisco.sourceUrl} target="_blank" rel="noopener noreferrer" className="absolute bottom-3 right-4 text-xs text-white/40 transition hover:text-white/70">
-        Foto: {photoCredits.heroObelisco.photographer} / Unsplash
-      </a>
     </section>
-  );
-}
-
-function SparkleIcon({ className = "h-5 w-5" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
-      <path d="M12 2 L14 9 L21 11 L14 13 L12 20 L10 13 L3 11 L10 9 Z" />
-    </svg>
   );
 }
 
