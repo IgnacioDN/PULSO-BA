@@ -21,9 +21,9 @@ export async function HowItWorks() {
           <p className="mt-2 text-white/60">{t("subtitle")}</p>
         </Reveal>
 
-        <ol className="mt-10 grid gap-8 sm:grid-cols-3">
+        <ol className="mt-10 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2 [scrollbar-width:none] sm:grid sm:grid-cols-3 sm:overflow-visible">
           {steps.map((step, i) => (
-            <Reveal key={step.title} delay={i * 120}>
+            <Reveal key={step.title} delay={i * 120} className="w-64 shrink-0 snap-start sm:w-auto">
               <li className="flex flex-col gap-2">
                 <span
                   aria-hidden="true"

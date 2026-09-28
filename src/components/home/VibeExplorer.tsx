@@ -40,11 +40,7 @@ export async function VibeExplorer({ events, locale }: Props) {
               const [c1, c2, c3] = vibe.palette;
               return (
                 <li key={vibe.id} className="shrink-0 snap-start">
-                  <Link
-                    href={`/events?vibe=${vibe.id}`}
-                    className="flex h-28 w-44 flex-col justify-end rounded-2xl p-4 text-white transition hover:-translate-y-0.5"
-                    style={{ background: `linear-gradient(135deg, ${c1}, ${c2} 55%, ${c3})` }}
-                  >
+                  <Link href={`/events?vibe=${vibe.id}`} className="flex h-28 w-44 flex-col justify-end rounded-2xl p-4 text-white transition hover:-translate-y-0.5" style={{ background: `linear-gradient(135deg, ${c1}, ${c2} 55%, ${c3})` }}>
                     <span className="text-sm font-semibold leading-snug drop-shadow-sm">
                       {localize(vibe.label, locale)}
                     </span>

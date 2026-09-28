@@ -4,7 +4,8 @@
     "subtitle": "La agenda viva de Buenos Aires",
     "upcoming": "Próximos eventos",
     "demoNotice": "Datos de demostración",
-    "free": "Gratis"
+    "free": "Gratis",
+    "viewAllIn": "Ver todo en {category} →"
   },
   "Categories": {
     "music": "Música",
@@ -94,9 +95,8 @@
     "step2Body": "Cruzamos lo que pediste con la agenda real de la ciudad.",
     "step3Title": "Vas al plan",
     "step3Body": "Fecha, lugar y precio, listo para decidir en el momento."
-  }
-,
-    "VibeExplorer": {
+  },
+  "VibeExplorer": {
     "title": "Explorá por vibra",
     "subtitle": "Elegí un clima, no una categoría."
   }

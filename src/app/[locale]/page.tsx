@@ -56,10 +56,7 @@ export default async function HomePage({ params }: Props) {
               </ul>
 
               {hasMore && (
-                <Link
-                  href={`/events?category=${category}`}
-                  className="mt-4 inline-block text-sm font-medium text-brand-celeste hover:underline"
-                >
+                <Link href={`/events?category=${category}`} className="mt-4 inline-block text-sm font-medium text-brand-celeste hover:underline">
                   {t("viewAllIn", { category: tCategories(category) })}
                 </Link>
               )}
