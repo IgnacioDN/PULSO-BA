@@ -19,14 +19,25 @@ const BUDGET_OPTIONS: BudgetOption[] = ["free", "low", "mid", "any"];
 type Props = {
   events: EventWithRelations[];
   locale: string;
+  initialCategory?: Category | null;
+  initialVibeId?: string | null;
 };
 
-export function EventsCatalog({ events, locale }: Props) {
+export function EventsCatalog({
+  events,
+  locale,
+  initialCategory = null,
+  initialVibeId = null,
+}: Props) {
   const t = useTranslations("Events");
   const tCategories = useTranslations("Categories");
   const tBudget = useTranslations("Hero.budget");
 
-  const [filters, setFilters] = useState<WizardFilters>(EMPTY_FILTERS);
+  const [filters, setFilters] = useState<WizardFilters>({
+    ...EMPTY_FILTERS,
+    categories: initialCategory ? [initialCategory] : [],
+    vibeId: initialVibeId,
+  });
   const neighborhoods = useMemo(() => getNeighborhoods(events), [events]);
   const results = useMemo(() => filterEvents(events, filters), [events, filters]);
 

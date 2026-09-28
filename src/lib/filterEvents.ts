@@ -1,14 +1,7 @@
 import type { Category, EventWithRelations } from "./schemas";
 
-/**
- * Lógica de filtrado del wizard de la home. Vive separada de los componentes
- * a propósito: es una función pura, fácil de testear con Vitest (fase 7)
- * sin tener que renderizar nada.
- */
-
 export type BudgetOption = "free" | "low" | "mid" | "any";
 
-/** null = "sin tope de precio" para esa opción de presupuesto. */
 const BUDGET_CEILINGS: Record<BudgetOption, number | null> = {
   free: 0,
   low: 15000,
@@ -18,14 +11,16 @@ const BUDGET_CEILINGS: Record<BudgetOption, number | null> = {
 
 export type WizardFilters = {
   budget: BudgetOption | null;
-  categories: Category[]; // vacío = todas las categorías
-  neighborhood: string | null; // null = cualquier zona
+  categories: Category[];
+  neighborhood: string | null;
+  vibeId: string | null;
 };
 
 export const EMPTY_FILTERS: WizardFilters = {
   budget: null,
   categories: [],
   neighborhood: null,
+  vibeId: null,
 };
 
 export function filterEvents(
@@ -35,25 +30,17 @@ export function filterEvents(
   const ceiling = filters.budget ? BUDGET_CEILINGS[filters.budget] : null;
 
   return events.filter((event) => {
-    // Un evento "encaja" en el presupuesto si su precio mínimo no lo supera:
-    // así un evento de $0–$20.000 sigue apareciendo para el filtro "Hasta $15.000".
     const matchesBudget = ceiling === null || event.priceRange.min <= ceiling;
-
     const matchesCategory =
       filters.categories.length === 0 || filters.categories.includes(event.category);
-
     const matchesZone =
       !filters.neighborhood || event.venue.neighborhood === filters.neighborhood;
+    const matchesVibe = !filters.vibeId || event.vibeId === filters.vibeId;
 
-    return matchesBudget && matchesCategory && matchesZone;
+    return matchesBudget && matchesCategory && matchesZone && matchesVibe;
   });
 }
 
-/**
- * Búsqueda por palabras clave sobre título, descripción y tags.
- * Es un reemplazo provisorio: en la fase 5 esta función se sustituye
- * por una llamada a un LLM que interpreta el pedido en lenguaje natural.
- */
 export function searchEventsByKeywords(
   events: EventWithRelations[],
   query: string,
