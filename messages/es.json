@@ -25,7 +25,8 @@
     "social": "Social",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
-    "catalog": "Catálogo"
+    "catalog": "Catálogo",
+    "map": "Mapa"
   },
   "Hero": {
     "question": "¿Qué querés hacer hoy?",
@@ -99,5 +100,11 @@
   "VibeExplorer": {
     "title": "Explorá por vibra",
     "subtitle": "Elegí un clima, no una categoría."
+  },
+  "MapPage": {
+    "title": "Mapa",
+    "subtitle": "Todos los lugares de la agenda, en el plano.",
+    "listTitle": "Lugares",
+    "viewEvents": "Ver eventos acá →"
   }
 }

@@ -19,6 +19,9 @@ export async function Header() {
           <Link href="/events" className="text-white/70 transition hover:text-white">
             {t("catalog")}
           </Link>
+          <Link href="/map" className="text-white/70 transition hover:text-white">
+            {t("map")}
+          </Link>
           {NAV_CATEGORIES.map((category) => (
             <a key={category} href={`/#${category}`} className="text-white/70 transition hover:text-white">
               {t(category)}

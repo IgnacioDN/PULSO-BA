@@ -1,43 +1,162 @@
-import Image from "next/image";
-import { Link } from "@/i18n/navigation";
-import { formatEventDate, formatPrice, localize } from "@/lib/format";
-import { photoCredits } from "@/lib/photoCredits";
-import type { EventWithRelations } from "@/lib/schemas";
+"use client";
+
+import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
+import { EventCard } from "@/components/events/EventCard";
+import { Reveal } from "@/components/ui/Reveal";
+import {
+  EMPTY_FILTERS,
+  filterEvents,
+  getNeighborhoods,
+  type BudgetOption,
+  type WizardFilters,
+} from "@/lib/filterEvents";
+import type { Category, EventWithRelations } from "@/lib/schemas";
+
+const CATEGORY_OPTIONS: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
+const BUDGET_OPTIONS: BudgetOption[] = ["free", "low", "mid", "any"];
 
 type Props = {
-  event: EventWithRelations;
+  events: EventWithRelations[];
   locale: string;
-  freeLabel: string;
+  initialCategory?: Category | null;
+  initialVibeId?: string | null;
+  initialNeighborhood?: string | null;
 };
 
-export function EventCard({ event, locale, freeLabel }: Props) {
-  const categoryPhoto = photoCredits.category[event.category];
-  const [c1, c2, c3] = event.vibe.palette;
+export function EventsCatalog({
+  events,
+  locale,
+  initialCategory = null,
+  initialVibeId = null,
+  initialNeighborhood = null,
+}: Props) {
+  const t = useTranslations("Events");
+  const tCategories = useTranslations("Categories");
+  const tBudget = useTranslations("Hero.budget");
+
+  const [filters, setFilters] = useState<WizardFilters>({
+    ...EMPTY_FILTERS,
+    categories: initialCategory ? [initialCategory] : [],
+    vibeId: initialVibeId,
+    neighborhood: initialNeighborhood,
+  });
+  const neighborhoods = useMemo(() => getNeighborhoods(events), [events]);
+  const results = useMemo(() => filterEvents(events, filters), [events, filters]);
+
+  function toggleCategory(category: Category) {
+    setFilters((current) => {
+      const has = current.categories.includes(category);
+      return {
+        ...current,
+        categories: has
+          ? current.categories.filter((c) => c !== category)
+          : [...current.categories, category],
+      };
+    });
+  }
 
   return (
-    <Link href={`/events/${event.slug}`} className="block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:-translate-y-0.5 hover:border-brand-celeste/40 hover:shadow-[0_0_28px_-10px_rgba(56,189,248,0.45)]">
-      <div className="relative h-32">
-        <Image
-          src={`${categoryPhoto.url}?auto=format&fit=crop&w=800&q=70`}
-          alt=""
-          fill
-          sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
-          className="object-cover"
+    <div>
+      <FilterGroup label={t("categoryLabel")}>
+        <Chip
+          label={t("allCategories")}
+          selected={filters.categories.length === 0}
+          onClick={() => setFilters((c) => ({ ...c, categories: [] }))}
         />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{ background: `linear-gradient(135deg, ${c1}cc, ${c2}99 60%, ${c3}66)` }}
+        {CATEGORY_OPTIONS.map((category) => (
+          <Chip
+            key={category}
+            label={tCategories(category)}
+            selected={filters.categories.includes(category)}
+            onClick={() => toggleCategory(category)}
+          />
+        ))}
+      </FilterGroup>
+
+      <FilterGroup label={t("zoneLabel")}>
+        <Chip
+          label={t("anyZone")}
+          selected={filters.neighborhood === null}
+          onClick={() => setFilters((c) => ({ ...c, neighborhood: null }))}
         />
-      </div>
-      <div className="space-y-1 p-4">
-        <p className="text-xs font-medium uppercase tracking-wide opacity-60">
-          {event.venue.neighborhood}
-        </p>
-        <h3 className="text-lg font-semibold">{localize(event.title, locale)}</h3>
-        <p className="text-sm opacity-70">{formatEventDate(event.startsAt, locale)}</p>
-        <p className="text-sm font-medium">{formatPrice(event.priceRange, locale, freeLabel)}</p>
-      </div>
-    </Link>
+        {neighborhoods.map((neighborhood) => (
+          <Chip
+            key={neighborhood}
+            label={neighborhood}
+            selected={filters.neighborhood === neighborhood}
+            onClick={() => setFilters((c) => ({ ...c, neighborhood }))}
+          />
+        ))}
+      </FilterGroup>
+
+      <FilterGroup label={t("budgetLabel")}>
+        <Chip
+          label={t("anyBudget")}
+          selected={filters.budget === null}
+          onClick={() => setFilters((c) => ({ ...c, budget: null }))}
+        />
+        {BUDGET_OPTIONS.map((option) => (
+          <Chip
+            key={option}
+            label={tBudget(option)}
+            selected={filters.budget === option}
+            onClick={() => setFilters((c) => ({ ...c, budget: option }))}
+          />
+        ))}
+      </FilterGroup>
+
+      <p className="mb-4 mt-8 text-sm opacity-60">
+        {t("resultsCount", { count: results.length })}
+      </p>
+
+      {results.length === 0 ? (
+        <p className="opacity-60">{t("empty")}</p>
+      ) : (
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {results.map((event, i) => (
+            <li key={event.id}>
+              <Reveal delay={(i % 6) * 70}>
+                <EventCard event={event} locale={locale} freeLabel={tBudget("free")} />
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function FilterGroup({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="mb-5">
+      <p className="mb-2 text-sm font-medium opacity-70">{label}</p>
+      <div className="flex flex-wrap gap-2">{children}</div>
+    </div>
+  );
+}
+
+function Chip({
+  label,
+  selected,
+  onClick,
+}: {
+  label: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={selected}
+      className={`rounded-full border px-4 py-1.5 text-sm font-medium transition ${
+        selected
+          ? "border-white bg-white text-neutral-950"
+          : "border-white/15 text-white/80 hover:border-white/35"
+      }`}
+    >
+      {label}
+    </button>
   );
 }
