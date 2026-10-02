@@ -21,6 +21,7 @@ type Props = {
   locale: string;
   initialCategory?: Category | null;
   initialVibeId?: string | null;
+  initialNeighborhood?: string | null;
 };
 
 export function EventsCatalog({
@@ -28,6 +29,7 @@ export function EventsCatalog({
   locale,
   initialCategory = null,
   initialVibeId = null,
+  initialNeighborhood = null,
 }: Props) {
   const t = useTranslations("Events");
   const tCategories = useTranslations("Categories");
@@ -37,6 +39,7 @@ export function EventsCatalog({
     ...EMPTY_FILTERS,
     categories: initialCategory ? [initialCategory] : [],
     vibeId: initialVibeId,
+    neighborhood: initialNeighborhood,
   });
   const neighborhoods = useMemo(() => getNeighborhoods(events), [events]);
   const results = useMemo(() => filterEvents(events, filters), [events, filters]);

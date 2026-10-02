@@ -42,4 +42,4 @@ export default async function MapPage({ params }: Props) {
       </main>
     </>
   );
-}ñ
+}
