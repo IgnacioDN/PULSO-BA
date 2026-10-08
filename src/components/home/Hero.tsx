@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import {
   EMPTY_FILTERS,
   filterEvents,
@@ -23,12 +24,16 @@ const STEP_ORDER: Step[] = ["intro", "budget", "category", "zone", "results"];
 const BUDGET_OPTIONS: BudgetOption[] = ["free", "low", "mid", "any"];
 const CATEGORY_OPTIONS: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
 
+// Fotos del slider del hero, en el orden pedido: Obelisco, Noche de los
+// Museos, Planetario.
 const HERO_IMAGES = [
   { src: "/hero/hero-2-obelisco.jpeg" },
   { src: "/hero/hero-2-noche-museos.jpeg" },
   { src: "/hero/hero-3-planetario.jpg" },
 ];
 
+// Ejemplos que rotan como placeholder, para mostrar de entrada que se puede
+// escribir en lenguaje natural (esto es lo que más nos diferencia).
 const QUERY_EXAMPLES = [
   "jazz en San Telmo, no muy caro",
   "planes gratis este finde",
@@ -67,6 +72,8 @@ export function Hero({ events, locale }: Props) {
 
   const stepIndex = STEP_ORDER.indexOf(step);
 
+  // Rotación de ejemplos en el placeholder. Es solo cosmético (no oculta
+  // contenido), así que si por lo que sea no corre, no pasa nada grave.
   useEffect(() => {
     const id = window.setInterval(() => {
       setExampleIndex((i) => (i + 1) % QUERY_EXAMPLES.length);
@@ -74,6 +81,8 @@ export function Hero({ events, locale }: Props) {
     return () => window.clearInterval(id);
   }, []);
 
+  // Avance automático del slider de fondo. Respeta "reducir movimiento":
+  // ahí se queda fijo en la primera foto.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = window.setInterval(() => {
@@ -97,6 +106,11 @@ export function Hero({ events, locale }: Props) {
     setStep("intro");
   }
 
+  // Le pasa el pedido a la IA para que lo convierta en filtros reales
+  // (presupuesto, categorías, barrio) + algunas palabras sueltas para
+  // afinar. Si la IA no está configurada, falla o tarda, no rompe nada:
+  // el buscador local por palabras clave sigue funcionando igual sobre
+  // el texto que haya en "query".
   async function runAiSearch(rawQuery: string) {
     if (!rawQuery.trim()) return;
     setIsSearching(true);
@@ -159,6 +173,10 @@ export function Hero({ events, locale }: Props) {
 
   return (
     <section className="relative overflow-hidden bg-neutral-950 text-white">
+      {/* Slider de fondo: las tres fotos se van turnando con un fundido suave.
+          La primera queda con priority (es la que cuenta para el LCP) y,
+          si por algo el JS no llega a correr, se queda fija — nunca hay
+          nada invisible por defecto. */}
       {HERO_IMAGES.map((image, i) => (
         <Image
           key={image.src}
@@ -213,7 +231,7 @@ export function Hero({ events, locale }: Props) {
                 <p className="mt-5 max-w-xl text-lg text-white/70">{t("conversationalHint")}</p>
 
                 <form onSubmit={handleConversationalSearch} className="mt-8 max-w-xl">
-                  <div className="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 py-1.5 pl-5 pr-1.5 backdrop-blur-sm transition focus-within:border-white/50">
+                  <div className="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 py-1.5 pl-5 pr-1.5 backdrop-blur-sm transition focus-within:border-brand-celeste/60">
                     <input
                       type="text"
                       value={query}
@@ -318,22 +336,26 @@ export function Hero({ events, locale }: Props) {
                   {results.slice(0, 6).map((event) => {
                     const [c1, c2] = event.vibe.palette;
                     return (
-                      <li
-                        key={event.id}
-                        className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm"
-                      >
-                        <div
-                          aria-hidden="true"
-                          className="h-12 w-12 shrink-0 rounded-lg"
-                          style={{ background: `linear-gradient(135deg, ${c1}, ${c2})` }}
-                        />
-                        <div className="min-w-0">
-                          <p className="truncate font-semibold">{localize(event.title, locale)}</p>
-                          <p className="truncate text-sm text-white/60">
-                            {formatEventDate(event.startsAt, locale)} ·{" "}
-                            {formatPrice(event.priceRange, locale, t("budget.free"))}
-                          </p>
-                        </div>
+                      <li key={event.id}>
+                        {/* Lleva al detalle del evento, donde está la ubicación
+                            en el mapa y el horario completo. */}
+                        <Link
+                          href={`/events/${event.slug}`}
+                          className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-brand-celeste/40 hover:bg-white/[0.08]"
+                        >
+                          <div
+                            aria-hidden="true"
+                            className="h-12 w-12 shrink-0 rounded-lg"
+                            style={{ background: `linear-gradient(135deg, ${c1}, ${c2})` }}
+                          />
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate font-semibold">{localize(event.title, locale)}</p>
+                            <p className="truncate text-sm text-white/60">
+                              {formatEventDate(event.startsAt, locale)} ·{" "}
+                              {formatPrice(event.priceRange, locale, t("budget.free"))}
+                            </p>
+                          </div>
+                        </Link>
                       </li>
                     );
                   })}
@@ -348,7 +370,7 @@ export function Hero({ events, locale }: Props) {
                       onChange={(e) => setQuery(e.target.value)}
                       placeholder={t("results.aiPlaceholder")}
                       disabled={isSearching}
-                      className="flex-1 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white placeholder-white/40 outline-none focus:border-white/50"
+                      className="flex-1 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white placeholder-white/40 outline-none focus:border-brand-celeste/60"
                     />
                     <Button type="submit" disabled={isSearching}>
                       {isSearching ? t("searching") : t("results.aiSearch")}
@@ -366,6 +388,8 @@ export function Hero({ events, locale }: Props) {
         </AnimatePresence>
       </div>
 
+      {/* Puntitos del slider: muestran cuál foto está activa y dejan
+          saltar a otra manualmente. */}
       <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
         {HERO_IMAGES.map((image, i) => (
           <button

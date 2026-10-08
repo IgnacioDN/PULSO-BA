@@ -16,6 +16,9 @@ export function EventCard({ event, locale, freeLabel }: Props) {
 
   return (
     <Link href={`/events/${event.slug}`} className="block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:-translate-y-0.5 hover:border-brand-celeste/40 hover:shadow-[0_0_28px_-10px_rgba(56,189,248,0.45)]">
+      {/* Foto real de la categoría, con el degradé de la vibra del evento
+          encima: mantiene la identidad de color sin que todas las tarjetas
+          de una misma categoría se vean idénticas. */}
       <div className="relative h-32">
         <Image
           src={`${categoryPhoto.url}?auto=format&fit=crop&w=800&q=70`}

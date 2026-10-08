@@ -1,9 +1,20 @@
 @import "tailwindcss";
 
+/*
+ * Identidad Pulso BA
+ * El fondo oscuro no es un "modo": es la marca. No depende de las
+ * preferencias del sistema. El tono es un marron oscuro calido (no negro
+ * puro), mas claro que la primera version: evoca la madera de los carros
+ * pintados a fileteado, sin quedar demasiado sombrio.
+ */
 :root {
   --background: #1c1612;
   --foreground: #f4f1e8;
 
+  /* Paleta fileteado: colores saturados reales del oficio. El celeste es el
+     acento principal (botones, links, foco, el brillo del logo) — hace guiño
+     a la bandera, sin caer en el celeste pastel de manual; rojo/verde quedan
+     para detalles puntuales, para no caer en confeti de colores. */
   --brand-celeste: #38bdf8;
   --brand-celeste-dark: #0369a1;
   --brand-red: #c81d25;
@@ -31,6 +42,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 
+  /* Resplandor muy sutil, dos tonos (celeste + vino), bien lento. Antes eran
+     tres manchas más intensas que terminaban leyéndose como un degradé
+     genérico de SaaS; esto es más discreto a propósito: el protagonismo
+     visual lo tiene que tener la conversación del hero, no el fondo. */
   background-image:
     radial-gradient(700px circle at 15% 15%, rgba(56, 189, 248, 0.09), transparent 60%),
     radial-gradient(750px circle at 85% 95%, rgba(122, 16, 21, 0.12), transparent 60%);
@@ -54,6 +69,10 @@ body {
   }
 }
 
+/*
+ * Animación de entrada por CSS puro (ver componente Reveal). Sin JS de por
+ * medio: no hay forma de que el contenido quede atascado invisible.
+ */
 @keyframes pulso-rise {
   from {
     opacity: 0;
@@ -75,6 +94,12 @@ body {
   }
 }
 
+/*
+ * Cartel de neón para el logo: la letra y el ícono "respiran" con un
+ * resplandor que sube y baja, como un cartel de luz de verdad. Se aplica
+ * al contenedor (Link) para que el ícono (currentColor) y el texto brillen
+ * juntos con una sola animación.
+ */
 @keyframes pulso-breathe {
   0%,
   100% {
@@ -98,7 +123,26 @@ body {
   }
 }
 
+/*
+ * Principio de accesibilidad: un foco de teclado visible y consistente en
+ * toda la app, en vez del outline por defecto (o peor, ninguno). Con color
+ * de marca, así también refuerza identidad.
+ */
 :focus-visible {
   outline: 2px solid var(--brand-celeste);
   outline-offset: 2px;
+}
+
+/*
+ * Los campos de texto tipo "pill" (el buscador del Hero, el de refinar
+ * resultados) ya muestran su propio estado de foco con el borde del
+ * contenedor que los envuelve (ver focus-within en Hero.tsx). Si además
+ * reciben el outline genérico de arriba, queda un doble contorno
+ * desprolijo (el borde del contenedor + el aro celeste pegado al borde
+ * redondeado). Para inputs y textareas, el foco se resuelve solo con el
+ * borde — nunca se pierde la señal visual de foco, solo se evita duplicarla.
+ */
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
 }

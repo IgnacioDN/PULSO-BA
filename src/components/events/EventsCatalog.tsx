@@ -19,8 +19,11 @@ const BUDGET_OPTIONS: BudgetOption[] = ["free", "low", "mid", "any"];
 type Props = {
   events: EventWithRelations[];
   locale: string;
+  /** Filtro inicial resuelto en el servidor (desde ?category= en la URL). */
   initialCategory?: Category | null;
+  /** Filtro inicial resuelto en el servidor (desde ?vibe= en la URL). */
   initialVibeId?: string | null;
+  /** Filtro inicial resuelto en el servidor (desde ?neighborhood= en la URL). */
   initialNeighborhood?: string | null;
 };
 
@@ -35,6 +38,10 @@ export function EventsCatalog({
   const tCategories = useTranslations("Categories");
   const tBudget = useTranslations("Hero.budget");
 
+  // El filtro inicial ya viene resuelto por el servidor (ver page.tsx), así
+  // que el primer render ya sale filtrado: sin parpadeo de "todo, después
+  // se corrige a lo filtrado" cuando se llega desde un link como
+  // "Ver todo en Música", una tarjeta de "Explorá por vibra" o un pin del mapa.
   const [filters, setFilters] = useState<WizardFilters>({
     ...EMPTY_FILTERS,
     categories: initialCategory ? [initialCategory] : [],
@@ -58,6 +65,7 @@ export function EventsCatalog({
 
   return (
     <div>
+      {/* Categoría: selección múltiple, igual criterio que en el wizard de la home. */}
       <FilterGroup label={t("categoryLabel")}>
         <Chip
           label={t("allCategories")}

@@ -10,9 +10,17 @@ type Props = {
   locale: string;
 };
 
+/**
+ * "Explorá por vibra": scroll horizontal en vez de otra grilla vertical.
+ * Es el patrón de interacción que le da más uso al sistema de colores por
+ * vibra, que hasta ahora solo se veía como un detalle en cada tarjeta.
+ * Cada card linkea al catálogo ya filtrado por esa vibra (?vibe=id).
+ */
 export async function VibeExplorer({ events, locale }: Props) {
   const t = await getTranslations("VibeExplorer");
 
+  // Solo vibras que tienen al menos un evento real: ninguna tarjeta lleva
+  // a un catálogo vacío.
   const seen = new Set<string>();
   const vibes: Vibe[] = [];
   for (const event of events) {
