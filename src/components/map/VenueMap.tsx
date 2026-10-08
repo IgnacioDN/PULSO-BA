@@ -7,11 +7,27 @@ import type { Venue } from "@/lib/schemas";
 
 type Props = {
   venues: Venue[];
+  /** Centro inicial del mapa. Por defecto, Buenos Aires en general. */
+  center?: { lat: number; lng: number };
+  /** Zoom inicial. 12 muestra toda la ciudad; 15-16 acerca a una cuadra. */
+  zoom?: number;
+  /** Clase para el contenedor, por si el mapa necesita otra altura (ej. embebido en la ficha de un evento). */
+  className?: string;
 };
 
 const BUENOS_AIRES_CENTER = { lat: -34.6037, lng: -58.4173 };
 
-export function VenueMap({ venues }: Props) {
+/**
+ * Mapa con un pin por lugar. Usa el Marker clásico de Google Maps (no el
+ * AdvancedMarkerElement nuevo) a propósito: el nuevo exige configurar un
+ * "Map ID" aparte en Google Cloud, un paso de más que no hace falta acá.
+ */
+export function VenueMap({
+  venues,
+  center = BUENOS_AIRES_CENTER,
+  zoom = 12,
+  className = "h-[480px] w-full overflow-hidden rounded-2xl",
+}: Props) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<string | null>(() =>
     process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
@@ -31,8 +47,8 @@ export function VenueMap({ venues }: Props) {
         if (cancelled || !mapRef.current) return;
 
         const map = new Map(mapRef.current, {
-          center: BUENOS_AIRES_CENTER,
-          zoom: 12,
+          center,
+          zoom,
           styles: darkMapStyle,
           disableDefaultUI: true,
           zoomControl: true,
@@ -74,15 +90,16 @@ export function VenueMap({ venues }: Props) {
     return () => {
       cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- center/zoom solo fijan el encuadre inicial, no deben reiniciar el mapa en cada render
   }, [venues]);
 
   if (error) {
     return (
-      <div className="flex h-[480px] items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-center text-white/60">
+      <div className={`flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-center text-white/60 ${className}`}>
         <p className="max-w-sm px-6">{error}</p>
       </div>
     );
   }
 
-  return <div ref={mapRef} className="h-[480px] w-full overflow-hidden rounded-2xl" />;
+  return <div ref={mapRef} className={className} />;
 }

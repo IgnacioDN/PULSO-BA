@@ -82,6 +82,7 @@
     "back": "Volver al catálogo",
     "dateLabel": "Cuándo",
     "venueLabel": "Dónde",
+    "locationLabel": "Ubicación",
     "priceLabel": "Precio",
     "lineupLabel": "Line-up",
     "notFoundTitle": "No encontramos este evento",

@@ -27,7 +27,7 @@ const CATEGORY_OPTIONS: Category[] = ["music", "theater", "food", "nightlife", "
 // Fotos del slider del hero, en el orden pedido: Obelisco, Noche de los
 // Museos, Planetario.
 const HERO_IMAGES = [
-  { src: "/hero/hero-2-obelisco.jpeg" },
+  { src: "/hero/hero-1-obelisco.jpg" },
   { src: "/hero/hero-2-noche-museos.jpeg" },
   { src: "/hero/hero-3-planetario.jpg" },
 ];
@@ -62,6 +62,10 @@ export function Hero({ events, locale }: Props) {
   const [exampleIndex, setExampleIndex] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
   const [isSearching, setIsSearching] = useState(false);
+  // Si alguna de las 3 fotos del slider no carga (falta en el repo, 404,
+  // lo que sea), la sacamos de la rotación en vez de mostrar el ícono de
+  // imagen rota: el fondo oscuro de la sección ya funciona como respaldo.
+  const [brokenSlides, setBrokenSlides] = useState<Set<number>>(new Set());
 
   const neighborhoods = useMemo(() => getNeighborhoods(events), [events]);
 
@@ -185,8 +189,16 @@ export function Hero({ events, locale }: Props) {
           fill
           priority={i === 0}
           sizes="100vw"
+          onError={() => {
+            setBrokenSlides((prev) => new Set(prev).add(i));
+            // Si justo era la foto que se estaba mostrando, saltamos a la
+            // siguiente al toque en vez de esperar los 6s del timer.
+            if (i === activeSlide) {
+              setActiveSlide((current) => (current + 1) % HERO_IMAGES.length);
+            }
+          }}
           className={`object-cover object-center transition-opacity duration-[1500ms] ease-in-out ${
-            i === activeSlide ? "opacity-100" : "opacity-0"
+            i === activeSlide && !brokenSlides.has(i) ? "opacity-100" : "opacity-0"
           }`}
         />
       ))}
