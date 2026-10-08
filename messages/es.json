@@ -60,10 +60,11 @@
       "aiTitle": "¿No es lo que buscabas? Contanos con tus palabras",
       "aiPlaceholder": "Ej: algo tranqui con música en vivo, no muy caro",
       "aiSearch": "Buscar",
-      "aiNote": "Por ahora buscamos por palabras clave. Pronto un agente con IA va a entender el pedido completo."
+      "aiNote": "Entendemos presupuesto, zona y tipo de plan a partir de lo que escribas."
     },
     "orStepByStep": "¿Preferís elegir paso a paso?",
-    "conversationalHint": "Escribilo con tus palabras, como se lo contarías a un amigo."
+    "conversationalHint": "Escribilo con tus palabras, como se lo contarías a un amigo.",
+    "searching": "Buscando..."
   },
   "Events": {
     "title": "Catálogo",

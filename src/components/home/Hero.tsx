@@ -24,8 +24,8 @@ const BUDGET_OPTIONS: BudgetOption[] = ["free", "low", "mid", "any"];
 const CATEGORY_OPTIONS: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
 
 const HERO_IMAGES = [
-  { src: "/hero/hero-1-obelisco.jpg" },
-  { src: "/hero/hero-2-noche-museos.jpg" },
+  { src: "/hero/hero-2-obelisco.jpeg" },
+  { src: "/hero/hero-2-noche-museos.jpeg" },
   { src: "/hero/hero-3-planetario.jpg" },
 ];
 
@@ -56,6 +56,7 @@ export function Hero({ events, locale }: Props) {
   const [query, setQuery] = useState("");
   const [exampleIndex, setExampleIndex] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
+  const [isSearching, setIsSearching] = useState(false);
 
   const neighborhoods = useMemo(() => getNeighborhoods(events), [events]);
 
@@ -96,9 +97,52 @@ export function Hero({ events, locale }: Props) {
     setStep("intro");
   }
 
-  function handleConversationalSearch(e: React.FormEvent) {
+  async function runAiSearch(rawQuery: string) {
+    if (!rawQuery.trim()) return;
+    setIsSearching(true);
+    try {
+      const res = await fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: rawQuery }),
+      });
+
+      if (res.ok) {
+        const data = (await res.json()) as {
+          budget: BudgetOption | null;
+          categories: Category[];
+          neighborhood: string | null;
+          keywords: string[];
+        };
+
+        setFilters((current) => ({
+          budget: data.budget ?? current.budget,
+          categories: data.categories.length > 0 ? data.categories : current.categories,
+          neighborhood: data.neighborhood ?? current.neighborhood,
+          vibeId: current.vibeId,
+        }));
+
+        if (data.keywords.length > 0) {
+          setQuery(data.keywords.join(" "));
+        }
+      }
+    } catch {
+      // Sin conexión, timeout, lo que sea: se sigue con el texto tal cual
+      // está, que el buscador local igual sabe interpretar.
+    } finally {
+      setIsSearching(false);
+    }
+  }
+
+  async function handleConversationalSearch(e: React.FormEvent) {
     e.preventDefault();
+    await runAiSearch(query);
     goTo("results");
+  }
+
+  async function handleRefineSearch(e: React.FormEvent) {
+    e.preventDefault();
+    await runAiSearch(query);
   }
 
   function toggleCategory(category: Category) {
@@ -176,10 +220,11 @@ export function Hero({ events, locale }: Props) {
                       onChange={(e) => setQuery(e.target.value)}
                       placeholder={QUERY_EXAMPLES[exampleIndex]}
                       aria-label={t("conversationalHint")}
+                      disabled={isSearching}
                       className="min-w-0 flex-1 bg-transparent py-2 text-sm text-white placeholder-white/50 outline-none sm:text-base"
                     />
-                    <Button type="submit" className="shrink-0">
-                      {t("results.aiSearch")}
+                    <Button type="submit" className="shrink-0" disabled={isSearching}>
+                      {isSearching ? t("searching") : t("results.aiSearch")}
                     </Button>
                   </div>
                 </form>
@@ -296,18 +341,18 @@ export function Hero({ events, locale }: Props) {
 
                 <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-5">
                   <p className="font-semibold">{t("results.aiTitle")}</p>
-                  <form
-                    className="mt-3 flex flex-col gap-2 sm:flex-row"
-                    onSubmit={(e) => e.preventDefault()}
-                  >
+                  <form className="mt-3 flex flex-col gap-2 sm:flex-row" onSubmit={handleRefineSearch}>
                     <input
                       type="text"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       placeholder={t("results.aiPlaceholder")}
+                      disabled={isSearching}
                       className="flex-1 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white placeholder-white/40 outline-none focus:border-white/50"
                     />
-                    <Button type="submit">{t("results.aiSearch")}</Button>
+                    <Button type="submit" disabled={isSearching}>
+                      {isSearching ? t("searching") : t("results.aiSearch")}
+                    </Button>
                   </form>
                   <p className="mt-2 text-xs text-white/50">{t("results.aiNote")}</p>
                 </div>
