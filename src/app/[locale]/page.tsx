@@ -1,76 +1,50 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
-import { Hero } from "@/components/home/Hero";
-import { HowItWorks } from "@/components/home/HowItWorks";
-import { VibeExplorer } from "@/components/home/VibeExplorer";
-import { EventCard } from "@/components/events/EventCard";
+import { EventsCatalog } from "@/components/events/EventsCatalog";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
-import { Link } from "@/i18n/navigation";
 import { getEvents } from "@/lib/data";
-import { photoCredits } from "@/lib/photoCredits";
 import type { Category } from "@/lib/schemas";
 
-const PREVIEW_COUNT = 2;
+const VALID_CATEGORIES: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
 
-type Props = { params: Promise<{ locale: string }> };
+// Misma razón que en /events/[slug]: esta página depende de query params
+// (?category=, ?vibe=, ?neighborhood=) y nunca debe quedar cacheada con
+// los filtros de una visita anterior.
+export const dynamic = "force-dynamic";
 
-export default async function HomePage({ params }: Props) {
+type Props = {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ category?: string; vibe?: string; neighborhood?: string }>;
+};
+
+export default async function EventsPage({ params, searchParams }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const t = await getTranslations("Home");
-  const tCategories = await getTranslations("Categories");
-  const events = await getEvents();
+  const { category, vibe, neighborhood } = await searchParams;
+  const initialCategory = VALID_CATEGORIES.includes(category as Category)
+    ? (category as Category)
+    : null;
 
-  const categories = Array.from(new Set(events.map((e) => e.category))) as Category[];
+  const t = await getTranslations("Events");
+  const events = await getEvents();
 
   return (
     <>
       <Header />
-      <Hero events={events} locale={locale} />
-      <HowItWorks />
-      <VibeExplorer events={events} locale={locale} />
+      <main className="mx-auto w-full max-w-6xl px-4 py-10">
+        <SectionHeading as="h1" className="text-3xl sm:text-4xl">
+          {t("title")}
+        </SectionHeading>
+        <p className="mt-2 mb-8 opacity-70">{t("subtitle")}</p>
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-14">
-        <p className="mb-8 text-sm opacity-50">{t("demoNotice")}</p>
-
-        {categories.map((category) => {
-          const categoryEvents = events.filter((e) => e.category === category);
-          const preview = categoryEvents.slice(0, PREVIEW_COUNT);
-          const hasMore = categoryEvents.length > PREVIEW_COUNT;
-
-          return (
-            <section key={category} id={category} className="mb-14 scroll-mt-20">
-              <Reveal>
-                <SectionHeading className="mb-4 text-xl">{tCategories(category)}</SectionHeading>
-              </Reveal>
-              <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {preview.map((event, i) => (
-                  <li key={event.id}>
-                    <Reveal delay={(i % 3) * 90}>
-                      <EventCard event={event} locale={locale} freeLabel={t("free")} />
-                    </Reveal>
-                  </li>
-                ))}
-              </ul>
-
-              {hasMore && (
-                <Link href={`/events?category=${category}`} className="mt-4 inline-block text-sm font-medium text-brand-celeste hover:underline">
-                  {t("viewAllIn", { category: tCategories(category) })}
-                </Link>
-              )}
-            </section>
-          );
-        })}
-
-        <p className="mt-4 text-xs opacity-40">
-          Fotos:{" "}
-          {Object.values(photoCredits.category)
-            .map((c) => c.photographer)
-            .join(", ")}{" "}
-          / Unsplash
-        </p>
+        <EventsCatalog
+          events={events}
+          locale={locale}
+          initialCategory={initialCategory}
+          initialVibeId={vibe ?? null}
+          initialNeighborhood={neighborhood ?? null}
+        />
       </main>
     </>
   );
