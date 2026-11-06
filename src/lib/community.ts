@@ -38,10 +38,15 @@ const EMPTY_STATS: EventCommunityStats = {
 export async function getEventCommunityStats(eventId: string): Promise<EventCommunityStats> {
   if (!isSupabaseConfigured()) return EMPTY_STATS;
 
+  try {
+    return await loadStats(eventId);
+  } catch {
+    return EMPTY_STATS;
+  }
+}
+
+async function loadStats(eventId: string): Promise<EventCommunityStats> {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
   const [favoriteCountRes, attendanceCountRes, reviewsRes, myFavoriteRes, myAttendanceRes] =
     await Promise.all([
