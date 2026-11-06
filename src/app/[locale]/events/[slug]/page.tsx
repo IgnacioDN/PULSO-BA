@@ -8,10 +8,24 @@ import { getEventBySlug } from "@/lib/data";
 import { formatEventDate, formatPrice, localize } from "@/lib/format";
 import { photoCredits } from "@/lib/photoCredits";
 import { VenueMap } from "@/components/map/VenueMap";
+import { ToggleButton } from "@/components/events/ToggleButton";
+import { ReviewForm } from "@/components/events/ReviewForm";
+import { getEventCommunityStats } from "@/lib/community";
+import { toggleFavorite, toggleAttendance, submitReview } from "@/lib/actions/community";
+import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
+
+// Cada evento tiene su propio slug: esta ruta SIEMPRE debe resolverse en el
+// servidor según el parámetro de la URL, nunca servir una versión cacheada
+// o reutilizada de otra página (como el catálogo).
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
 };
+
+const DT_CLASS = "text-xs font-semibold uppercase tracking-wide opacity-50";
+const MAP_CLASS = "h-72 w-full overflow-hidden rounded-2xl sm:h-80";
 
 export default async function EventDetailPage({ params }: Props) {
   const { locale, slug } = await params;
@@ -27,6 +41,25 @@ export default async function EventDetailPage({ params }: Props) {
   const categoryPhoto = photoCredits.category[event.category];
   const [c1, c2, c3] = event.vibe.palette;
 
+  const stats = await getEventCommunityStats(event.id);
+  const supabaseOn = isSupabaseConfigured();
+  let loggedIn = false;
+  if (supabaseOn) {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    loggedIn = Boolean(user);
+  }
+
+  const boundToggleFavorite = toggleFavorite.bind(null, event.slug, event.id);
+  const boundToggleAttendance = toggleAttendance.bind(null, event.slug, event.id);
+  const boundSubmitReview = submitReview.bind(null, event.slug, event.id);
+
+  const favoriteLabel = `Favorito${stats.favoriteCount > 0 ? ` · ${stats.favoriteCount}` : ""}`;
+  const attendanceLabel = `Voy${stats.attendanceCount > 0 ? ` · ${stats.attendanceCount}` : ""}`;
+  const gradient = `linear-gradient(135deg, ${c1}cc, ${c2}80 55%, ${c3}40)`;
+
   return (
     <>
       <Header />
@@ -35,31 +68,14 @@ export default async function EventDetailPage({ params }: Props) {
             Es la "galería" por ahora: con datos de demostración, una foto
             curada por evento queda para cuando haya contenido real. */}
         <div className="relative h-64 sm:h-80">
-          <Image
-            src={`${categoryPhoto.url}?auto=format&fit=crop&w=1600&q=75`}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0"
-            style={{ background: `linear-gradient(135deg, ${c1}cc, ${c2}80 55%, ${c3}40)` }}
-          />
+          <Image src={`${categoryPhoto.url}?auto=format&fit=crop&w=1600&q=75`} alt="" fill priority sizes="100vw" className="object-cover" />
+          <div aria-hidden="true" className="absolute inset-0" style={{ background: gradient }} />
           <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
           <div className="absolute bottom-0 left-0 right-0 mx-auto w-full max-w-6xl px-4 py-6 text-white">
-            <Link href="/events" className="text-sm font-medium text-white/80 hover:text-white">
-              ← {t("back")}
-            </Link>
-            <p className="mt-3 text-xs font-medium uppercase tracking-wide text-white/70">
-              {tCategories(event.category)} · {event.venue.neighborhood}
-            </p>
-            <SectionHeading as="h1" className="mt-1 text-3xl sm:text-4xl">
-              {localize(event.title, locale)}
-            </SectionHeading>
+            <Link href="/events" className="text-sm font-medium text-white/80 hover:text-white">← {t("back")}</Link>
+            <p className="mt-3 text-xs font-medium uppercase tracking-wide text-white/70">{tCategories(event.category)} · {event.venue.neighborhood}</p>
+            <SectionHeading as="h1" className="mt-1 text-3xl sm:text-4xl">{localize(event.title, locale)}</SectionHeading>
           </div>
         </div>
 
@@ -73,12 +89,7 @@ export default async function EventDetailPage({ params }: Props) {
                   <p className="mb-2 text-sm font-semibold opacity-70">{t("lineupLabel")}</p>
                   <ul className="flex flex-wrap gap-2">
                     {event.lineup.map((act) => (
-                      <li
-                        key={act}
-                        className="rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-sm"
-                      >
-                        {act}
-                      </li>
+                      <li key={act} className="rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-sm">{act}</li>
                     ))}
                   </ul>
                 </div>
@@ -87,9 +98,7 @@ export default async function EventDetailPage({ params }: Props) {
               {event.tags.length > 0 && (
                 <div className="mt-8 flex flex-wrap gap-2">
                   {event.tags.map((tag) => (
-                    <span key={tag} className="text-sm opacity-50">
-                      #{tag}
-                    </span>
+                    <span key={tag} className="text-sm opacity-50">#{tag}</span>
                   ))}
                 </div>
               )}
@@ -99,28 +108,61 @@ export default async function EventDetailPage({ params }: Props) {
                   mostrar un mensaje claro en vez de romper la página. */}
               <div className="mt-10">
                 <p className="mb-3 text-sm font-semibold opacity-70">{t("locationLabel")}</p>
-                <VenueMap
-                  venues={[event.venue]}
-                  center={{ lat: event.venue.lat, lng: event.venue.lng }}
-                  zoom={15}
-                  className="h-72 w-full overflow-hidden rounded-2xl sm:h-80"
-                />
+                <VenueMap venues={[event.venue]} center={{ lat: event.venue.lat, lng: event.venue.lng }} zoom={15} className={MAP_CLASS} />
               </div>
+
+              {/* Comunidad: solo aparece si Supabase está configurado — si no,
+                  no tiene sentido mostrar una sección sin datos reales. */}
+              {supabaseOn && (
+                <div className="mt-10 border-t border-white/10 pt-8">
+                  <div className="mb-5 flex items-center gap-3">
+                    <p className="text-sm font-semibold opacity-70">Reseñas</p>
+                    {stats.averageRating !== null && (
+                      <span className="text-sm text-white/60">★ {stats.averageRating.toFixed(1)} · {stats.reviews.length} {stats.reviews.length === 1 ? "reseña" : "reseñas"}</span>
+                    )}
+                  </div>
+
+                  <div className="mb-8">
+                    <ReviewForm action={boundSubmitReview} loggedIn={loggedIn} initialRating={stats.myReview?.rating ?? 0} initialBody={stats.myReview?.body ?? ""} />
+                  </div>
+
+                  {stats.reviews.length > 0 ? (
+                    <ul className="space-y-4">
+                      {stats.reviews.map((review) => (
+                        <li key={review.id} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                          <div className="mb-1 flex items-center justify-between gap-2">
+                            <span className="truncate text-sm font-medium text-white/80">{review.authorEmail}</span>
+                            <span className="shrink-0 text-sm text-brand-celeste">
+                              {"★".repeat(review.rating)}
+                              <span className="text-white/20">{"★".repeat(5 - review.rating)}</span>
+                            </span>
+                          </div>
+                          <p className="text-sm text-white/70">{review.body}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-white/50">Todavía no hay reseñas. ¡Dejá la primera!</p>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Ficha de datos: fecha, lugar y precio, siempre visibles al costado. */}
             <aside className="h-fit rounded-2xl border border-white/15 bg-white/[0.03] p-5">
+              {supabaseOn && (
+                <div className="mb-5 flex flex-wrap gap-2">
+                  <ToggleButton action={boundToggleFavorite} initialActive={stats.isFavorited} activeLabel={favoriteLabel} inactiveLabel={favoriteLabel} icon="heart" loggedIn={loggedIn} />
+                  <ToggleButton action={boundToggleAttendance} initialActive={stats.isAttending} activeLabel={attendanceLabel} inactiveLabel={attendanceLabel} icon="check" loggedIn={loggedIn} />
+                </div>
+              )}
               <dl className="space-y-4">
                 <div>
-                  <dt className="text-xs font-semibold uppercase tracking-wide opacity-50">
-                    {t("dateLabel")}
-                  </dt>
+                  <dt className={DT_CLASS}>{t("dateLabel")}</dt>
                   <dd className="mt-1">{formatEventDate(event.startsAt, locale)}</dd>
                 </div>
                 <div>
-                  <dt className="text-xs font-semibold uppercase tracking-wide opacity-50">
-                    {t("venueLabel")}
-                  </dt>
+                  <dt className={DT_CLASS}>{t("venueLabel")}</dt>
                   <dd className="mt-1">
                     {event.venue.name}
                     <br />
@@ -128,12 +170,8 @@ export default async function EventDetailPage({ params }: Props) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs font-semibold uppercase tracking-wide opacity-50">
-                    {t("priceLabel")}
-                  </dt>
-                  <dd className="mt-1">
-                    {formatPrice(event.priceRange, locale, tBudget("free"))}
-                  </dd>
+                  <dt className={DT_CLASS}>{t("priceLabel")}</dt>
+                  <dd className="mt-1">{formatPrice(event.priceRange, locale, tBudget("free"))}</dd>
                 </div>
               </dl>
             </aside>
