@@ -31,7 +31,7 @@ export default async function HomePage({ params }: Props) {
       <Header />
       <Hero events={events} locale={locale} />
       <MarqueeBand />
-      <HowItWorks />
+      <HowItWorks events={events} />
       <VibeExplorer events={events} locale={locale} />
 
       <main className="mx-auto w-full max-w-6xl px-4 py-14">
