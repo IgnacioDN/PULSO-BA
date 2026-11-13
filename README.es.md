@@ -72,7 +72,7 @@ cp .env.example .env.local   # completá lo que tengas, todo es opcional
 npm run dev                  # http://localhost:3000
 ```
 
-Otros scripts: `npm run lint` y `npm run build`.
+Otros scripts: `npm test` (Vitest: filtros, schemas, formato y datos de demostración), `npm run typecheck`, `npm run lint` y `npm run build`. Los mismos chequeos corren en cada push con GitHub Actions.
 
 Sin ninguna clave funcionan el catálogo, los filtros, las páginas de evento y la búsqueda por palabras clave. Cada clave habilita una cosa:
 

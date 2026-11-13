@@ -72,7 +72,7 @@ cp .env.example .env.local   # fill in what you have, all of it is optional
 npm run dev                  # http://localhost:3000
 ```
 
-Other scripts: `npm run lint` and `npm run build`.
+Other scripts: `npm test` (Vitest: filters, schemas, formatting, demo data), `npm run typecheck`, `npm run lint` and `npm run build`. The same checks run on every push with GitHub Actions.
 
 Without any keys the catalog, filters, event pages and keyword search all work. Each key unlocks one thing:
 
