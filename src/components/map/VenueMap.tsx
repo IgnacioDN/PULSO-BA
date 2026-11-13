@@ -42,6 +42,15 @@ export function VenueMap({
     setOptions({ key: apiKey, v: "weekly" });
     let cancelled = false;
 
+    // Google llama a esta función cuando rechaza la clave (por ejemplo, si el
+    // dominio no está permitido). Mostramos un mensaje propio en vez del
+    // cartel gris de Google.
+    const authWindow = window as unknown as { gm_authFailure?: () => void };
+    authWindow.gm_authFailure = () => {
+      console.error("[mapa] Google Maps rechazó la clave: revisá las restricciones de dominio y de API.");
+      if (!cancelled) setError("El mapa no está disponible en este momento.");
+    };
+
     importLibrary("maps")
       .then(({ Map, InfoWindow }) => {
         if (cancelled || !mapRef.current) return;
@@ -89,6 +98,7 @@ export function VenueMap({
 
     return () => {
       cancelled = true;
+      delete authWindow.gm_authFailure;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- center/zoom solo fijan el encuadre inicial, no deben reiniciar el mapa en cada render
   }, [venues]);

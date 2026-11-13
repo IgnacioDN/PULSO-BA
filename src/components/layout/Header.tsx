@@ -4,10 +4,10 @@ import type { Category } from "@/lib/schemas";
 import { getCurrentUser } from "@/lib/supabase/user";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { signOut } from "@/lib/actions/auth";
+import { UserMenu } from "@/components/layout/UserMenu";
 
 const NAV_CATEGORIES: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
 
-const AUTH_BUTTON_CLASS = "rounded-full border border-white/20 px-4 py-1.5 text-sm font-medium text-white/80 transition hover:border-white/40 hover:text-white";
 const NAV_LINK_CLASS = "text-white/70 transition hover:text-white";
 
 export async function Header() {
@@ -38,15 +38,7 @@ export async function Header() {
             ))}
           </nav>
 
-          {isSupabaseConfigured() &&
-            (userEmail ? (
-              <form action={signOut} className="flex items-center gap-3">
-                <span className="hidden max-w-[12ch] truncate text-sm text-white/60 sm:inline" title={userEmail}>{userEmail}</span>
-                <button type="submit" className={AUTH_BUTTON_CLASS}>Salir</button>
-              </form>
-            ) : (
-              <Link href="/auth" className={AUTH_BUTTON_CLASS}>Iniciar sesión</Link>
-            ))}
+          {isSupabaseConfigured() && <UserMenu email={userEmail} signOutAction={signOut} />}
         </div>
       </div>
     </header>
