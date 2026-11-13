@@ -48,8 +48,9 @@ create table public.reviews (
   event_id text not null,
   user_id uuid not null references auth.users(id) on delete cascade,
   -- La tabla auth.users no es legible desde el cliente (RLS la protege), así
-  -- que guardamos acá el nombre a mostrar (el email) al momento de postear.
-  author_email text not null,
+  -- que guardamos acá un nombre a mostrar (nunca el email completo, porque
+  -- esta tabla es pública para leer).
+  author_name text not null,
   rating smallint not null check (rating between 1 and 5),
   body text not null check (char_length(body) between 1 and 1000),
   created_at timestamptz not null default now(),

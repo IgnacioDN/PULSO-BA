@@ -118,10 +118,9 @@ supabase/            schema.sql
 
 ## Not done yet
 
-- **No automated tests.** This is the biggest gap. Next up: unit tests for the filters and schemas, and a Playwright end-to-end test for the main flow (search → event → login).
+- **No end-to-end tests yet.** Unit tests and CI are in place (filters, schemas, formatting, demo data). Next: a Playwright test of the main flow (search → event → login).
 - **English UI.** Event content is already bilingual in the schema (`{ es, en }`) and next-intl is set up, but only `messages/es.json` exists.
 - **Real events.** Everything is demo data. The data layer is ready to read from a database.
-- **Reviews store the author's email.** The UI only shows the first letters, but the column is publicly readable through the API. The fix is to store a display name instead.
 
 ## About me
 
@@ -129,4 +128,4 @@ Frontend developer with React and TypeScript, with 3+ years working in ecommerce
 
 ## License
 
-No license yet, so all rights reserved for now.
+MIT. See [LICENSE](LICENSE). The demo photos belong to their authors on Unsplash.

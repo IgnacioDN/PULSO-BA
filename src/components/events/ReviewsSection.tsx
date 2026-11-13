@@ -13,16 +13,6 @@ type Props = {
 
 const CARD_CLASS = "rounded-2xl border border-white/10 bg-white/[0.03]";
 
-/**
- * Las reseñas son públicas, así que no mostramos el email completo: solo
- * las primeras letras. (El email sigue guardado, pero no se exhibe.)
- */
-function maskedName(email: string): string {
-  const local = email.split("@")[0] ?? "";
-  const visible = local.slice(0, Math.min(3, Math.max(1, local.length - 1)));
-  return `${visible}•••`;
-}
-
 function formatReviewDate(iso: string, locale: string): string {
   const date = new Date(iso);
   if (Number.isNaN(date.getTime())) return "";
@@ -74,11 +64,11 @@ export function ReviewsSection({ stats, action, loggedIn, locale }: Props) {
               <li key={review.id} className={`p-5 ${CARD_CLASS}`}>
                 <div className="flex items-start gap-3">
                   <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-sm font-semibold uppercase text-white/80">
-                    {review.authorEmail.charAt(0)}
+                    {review.authorName.charAt(0)}
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                      <span className="text-sm font-medium text-white/90">{maskedName(review.authorEmail)}</span>
+                      <span className="text-sm font-medium text-white/90">{review.authorName}</span>
                       {isMine && <span className="rounded-full bg-brand-celeste/15 px-2 py-0.5 text-[11px] font-medium text-brand-celeste">Tu reseña</span>}
                     </div>
                     <div className="mt-0.5 flex items-center gap-2 text-xs text-white/45">

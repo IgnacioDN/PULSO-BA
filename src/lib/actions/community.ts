@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { displayNameFromEmail } from "@/lib/displayName";
 
 type ActionResult = { error: string } | { ok: true };
 
@@ -85,7 +86,7 @@ export async function submitReview(
     {
       event_id: eventId,
       user_id: user.id,
-      author_email: user.email,
+      author_name: displayNameFromEmail(user.email),
       rating,
       body,
     },

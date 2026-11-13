@@ -3,7 +3,7 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export type Review = {
   id: string;
-  authorEmail: string;
+  authorName: string;
   rating: number;
   body: string;
   createdAt: string;
@@ -57,7 +57,7 @@ async function loadStats(eventId: string): Promise<EventCommunityStats> {
       supabase.from("attendances").select("user_id", { count: "exact", head: true }).eq("event_id", eventId),
       supabase
         .from("reviews")
-        .select("id, author_email, rating, body, created_at, user_id")
+        .select("id, author_name, rating, body, created_at, user_id")
         .eq("event_id", eventId)
         .order("created_at", { ascending: false }),
       user
@@ -70,7 +70,7 @@ async function loadStats(eventId: string): Promise<EventCommunityStats> {
 
   const reviews: Review[] = (reviewsRes.data ?? []).map((r) => ({
     id: r.id,
-    authorEmail: r.author_email,
+    authorName: r.author_name,
     rating: r.rating,
     body: r.body,
     createdAt: r.created_at,
@@ -93,7 +93,7 @@ async function loadStats(eventId: string): Promise<EventCommunityStats> {
     myReview: myReview
       ? {
           id: myReview.id,
-          authorEmail: myReview.author_email,
+          authorName: myReview.author_name,
           rating: myReview.rating,
           body: myReview.body,
           createdAt: myReview.created_at,

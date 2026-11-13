@@ -118,10 +118,9 @@ supabase/            schema.sql
 
 ## Lo que falta
 
-- **No hay tests automáticos.** Es la mayor deuda. Lo próximo: tests unitarios de los filtros y esquemas, y un test end-to-end con Playwright del flujo principal (buscar → evento → login).
+- **Faltan tests end-to-end.** Ya hay tests unitarios y CI (filtros, esquemas, formato y datos de demostración). Lo próximo: un test con Playwright del flujo principal (buscar → evento → login).
 - **Interfaz en inglés.** El contenido de los eventos ya es bilingüe en el esquema (`{ es, en }`) y next-intl está configurado, pero solo existe `messages/es.json`.
 - **Eventos reales.** Todo es de demostración. La capa de datos está lista para leer de una base.
-- **Las reseñas guardan el email del autor.** La interfaz muestra solo las primeras letras, pero la columna es legible públicamente por la API. La solución es guardar un nombre para mostrar.
 
 ## Sobre mí
 
@@ -129,4 +128,4 @@ Desarrollador frontend con React y TypeScript, con más de 3 años en ecommerce 
 
 ## Licencia
 
-Todavía no tiene licencia, así que por ahora todos los derechos reservados.
+MIT. Mirá el archivo [LICENSE](LICENSE). Las fotos de demostración pertenecen a sus autores en Unsplash.
