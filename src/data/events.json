@@ -28,7 +28,13 @@
     "lineup": [
       "Trío Marea",
       "Lucía Farías Quinteto"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1511192336575-5a79af67a629",
+      "photographer": "Chris Bair",
+      "photographerUrl": "https://unsplash.com/@chrisbair",
+      "sourceUrl": "https://unsplash.com/photos/A10y2Eq7OHY"
+    }
   },
   {
     "id": "atardecer-en-la-terraza",
@@ -58,7 +64,13 @@
     ],
     "lineup": [
       "DJ Almendra"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1626792431317-1aaf7f0bba0c",
+      "photographer": "mica lavandera",
+      "photographerUrl": "https://unsplash.com/@micalavand",
+      "sourceUrl": "https://unsplash.com/photos/4HTv4Www4uo"
+    }
   },
   {
     "id": "el-ultimo-telon",
@@ -84,7 +96,13 @@
     "tags": [
       "drama",
       "teatro independiente"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1717915604557-94283edbcc1b",
+      "photographer": "Toni Pomar",
+      "photographerUrl": "https://unsplash.com/@t3k",
+      "sourceUrl": "https://unsplash.com/photos/j5bRXs1iFy0"
+    }
   },
   {
     "id": "cena-de-pasos-de-estacion",
@@ -111,7 +129,13 @@
       "cena",
       "maridaje",
       "cocina de autor"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1660380775592-5647075c8ea0",
+      "photographer": "Dwi Agus Prasetiyo",
+      "photographerUrl": "https://unsplash.com/@agusprasetyow",
+      "sourceUrl": "https://unsplash.com/photos/2U1E1jedY-A"
+    }
   },
   {
     "id": "noche-electrica-vol-3",
@@ -143,7 +167,13 @@
       "Nébula",
       "Kuru",
       "Ana Sintética"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1578736641330-3155e606cd40",
+      "photographer": "A J.",
+      "photographerUrl": "https://unsplash.com/@antoinejulien",
+      "sourceUrl": "https://unsplash.com/photos/A_0C42zmz1Q"
+    }
   },
   {
     "id": "inauguracion-luz-y-papel",
@@ -170,7 +200,13 @@
       "fotografía",
       "muestra",
       "inauguración"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1765920774183-9c0841be77c0",
+      "photographer": "Cristian Pineda",
+      "photographerUrl": "https://unsplash.com/@watershoes",
+      "sourceUrl": "https://unsplash.com/photos/b-ILnNp8N8c"
+    }
   },
   {
     "id": "feria-de-diseno-del-riel",
@@ -197,7 +233,13 @@
       "feria",
       "diseño",
       "familia"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1768992831140-2f6f6c388f5b",
+      "photographer": "Claudio Schwarz",
+      "photographerUrl": "https://unsplash.com/@purzlbaum",
+      "sourceUrl": "https://unsplash.com/photos/xDR0GP-EpNk"
+    }
   },
   {
     "id": "cartas-a-nadie",
@@ -223,7 +265,13 @@
     "tags": [
       "monólogo",
       "íntimo"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1667589543115-c483e1e8dcaa",
+      "photographer": "Romain Virtuel",
+      "photographerUrl": "https://unsplash.com/@romainvirtuel",
+      "sourceUrl": "https://unsplash.com/photos/96qk47Uj_Sg"
+    }
   },
   {
     "id": "brunch-y-vinilos",
@@ -250,7 +298,13 @@
       "brunch",
       "vinilos",
       "soul"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1697872800493-df42d51aefa9",
+      "photographer": "ale ber",
+      "photographerUrl": "https://unsplash.com/@gionzo",
+      "sourceUrl": "https://unsplash.com/photos/9BXJv6fyeVA"
+    }
   },
   {
     "id": "bolero-y-tango-de-madrugada",
@@ -280,7 +334,13 @@
     ],
     "lineup": [
       "Orquesta Chica del Sur"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1744280054578-0eb52b97bbf8",
+      "photographer": "İsmail Efe Top",
+      "photographerUrl": "https://unsplash.com/@ismailefetop",
+      "sourceUrl": "https://unsplash.com/photos/Z1_9CbuR46g"
+    }
   },
   {
     "id": "degustacion-de-vinos-del-sur",
@@ -307,7 +367,13 @@
       "vino",
       "degustación",
       "patagonia"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1589881133595-a3c085cb731d",
+      "photographer": "Aliona Gumeniuk",
+      "photographerUrl": "https://unsplash.com/@agumeniuk",
+      "sourceUrl": "https://unsplash.com/photos/jeAjT87nbjM"
+    }
   },
   {
     "id": "after-office-de-arte",
@@ -334,6 +400,12 @@
       "after office",
       "networking",
       "arte"
-    ]
+    ],
+    "photo": {
+      "url": "https://images.unsplash.com/photo-1515169974372-0a322886d279",
+      "photographer": "Antenna",
+      "photographerUrl": "https://unsplash.com/@antenna",
+      "sourceUrl": "https://unsplash.com/photos/EL4CGRnwwNc"
+    }
   }
 ]

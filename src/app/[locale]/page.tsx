@@ -68,9 +68,12 @@ export default async function HomePage({ params }: Props) {
 
         <p className="mt-4 text-xs opacity-40">
           Fotos:{" "}
-          {Object.values(photoCredits.category)
-            .map((c) => c.photographer)
-            .join(", ")}{" "}
+          {Array.from(
+            new Set([
+              ...events.flatMap((e) => (e.photo ? [e.photo.photographer] : [])),
+              ...Object.values(photoCredits.category).map((c) => c.photographer),
+            ]),
+          ).join(", ")}{" "}
           / Unsplash
         </p>
       </main>

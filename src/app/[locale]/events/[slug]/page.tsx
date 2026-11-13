@@ -38,7 +38,7 @@ export default async function EventDetailPage({ params }: Props) {
   const tCategories = await getTranslations("Categories");
   const tBudget = await getTranslations("Hero.budget");
 
-  const categoryPhoto = photoCredits.category[event.category];
+  const photo = event.photo ?? photoCredits.category[event.category];
   const [c1, c2, c3] = event.vibe.palette;
 
   const stats = await getEventCommunityStats(event.id);
@@ -51,7 +51,9 @@ export default async function EventDetailPage({ params }: Props) {
 
   const favoriteLabel = `Favorito${stats.favoriteCount > 0 ? ` · ${stats.favoriteCount}` : ""}`;
   const attendanceLabel = `Voy${stats.attendanceCount > 0 ? ` · ${stats.attendanceCount}` : ""}`;
-  const gradient = `linear-gradient(135deg, ${c1}cc, ${c2}80 55%, ${c3}40)`;
+  const gradient = event.photo
+    ? `linear-gradient(135deg, ${c1}66, ${c2}40 55%, ${c3}1a)`
+    : `linear-gradient(135deg, ${c1}cc, ${c2}80 55%, ${c3}40)`;
 
   return (
     <>
@@ -61,7 +63,7 @@ export default async function EventDetailPage({ params }: Props) {
             Es la "galería" por ahora: con datos de demostración, una foto
             curada por evento queda para cuando haya contenido real. */}
         <div className="relative h-64 sm:h-80">
-          <Image src={`${categoryPhoto.url}?auto=format&fit=crop&w=1600&q=75`} alt="" fill priority sizes="100vw" className="object-cover" />
+          <Image src={`${photo.url}?auto=format&fit=crop&w=1600&q=75`} alt="" fill priority sizes="100vw" className="object-cover" />
           <div aria-hidden="true" className="absolute inset-0" style={{ background: gradient }} />
           <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
@@ -103,6 +105,10 @@ export default async function EventDetailPage({ params }: Props) {
                 <p className="mb-3 text-sm font-semibold opacity-70">{t("locationLabel")}</p>
                 <VenueMap venues={[event.venue]} center={{ lat: event.venue.lat, lng: event.venue.lng }} zoom={15} className={MAP_CLASS} />
               </div>
+
+              <p className="mt-6 text-xs text-white/50">
+                Foto: <a href={photo.photographerUrl} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">{photo.photographer}</a> / <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:underline">Unsplash</a>
+              </p>
 
               {/* Comunidad: solo aparece si Supabase está configurado. */}
               {supabaseOn && <ReviewsSection stats={stats} action={boundSubmitReview} loggedIn={loggedIn} locale={locale} />}

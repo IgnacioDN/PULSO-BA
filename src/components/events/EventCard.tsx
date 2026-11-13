@@ -16,7 +16,7 @@ type Props = {
  * vistazo (día, fecha, hora, precio y lugar).
  */
 export function EventCard({ event, locale, freeLabel }: Props) {
-  const categoryPhoto = photoCredits.category[event.category];
+  const photo = event.photo ?? photoCredits.category[event.category];
   const [c1, c2, c3] = event.vibe.palette;
   const when = formatEventParts(event.startsAt, locale);
   const isFree = event.priceRange.max === 0;
@@ -28,13 +28,13 @@ export function EventCard({ event, locale, freeLabel }: Props) {
     >
       <div className="relative h-48 overflow-hidden">
         <Image
-          src={`${categoryPhoto.url}?auto=format&fit=crop&w=800&q=70`}
+          src={`${photo.url}?auto=format&fit=crop&w=800&q=70`}
           alt=""
           fill
           sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
           className="object-cover transition duration-700 group-hover:scale-110"
         />
-        <div aria-hidden="true" className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${c1}d9, ${c2}a6 60%, ${c3}80)` }} />
+        <div aria-hidden="true" className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${c1}${event.photo ? "73" : "d9"}, ${c2}${event.photo ? "4d" : "a6"} 60%, ${c3}${event.photo ? "26" : "80"})` }} />
         <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div aria-hidden="true" className="pulso-shine" />
 

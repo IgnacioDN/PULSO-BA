@@ -35,6 +35,13 @@ export const VenueSchema = z.object({
   images: z.array(z.string()),
 });
 
+export const PhotoSchema = z.object({
+  url: z.url(),
+  photographer: z.string(),
+  photographerUrl: z.url(),
+  sourceUrl: z.url(),
+});
+
 export const EventSchema = z.object({
   id: z.string(),
   slug: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "Slug inválido"),
@@ -53,6 +60,8 @@ export const EventSchema = z.object({
     })
     .refine((p) => p.max >= p.min, "El precio máximo no puede ser menor al mínimo"),
   images: z.array(z.string()),
+  /** Foto propia del evento (Unsplash). Si falta, se usa la de su categoría. */
+  photo: PhotoSchema.optional(),
   lineup: z.array(z.string()).optional(),
   tags: z.array(z.string()),
 });
@@ -67,6 +76,7 @@ export const ReviewSchema = z.object({
   createdAt: z.iso.datetime({ offset: true }),
 });
 
+export type Photo = z.infer<typeof PhotoSchema>;
 export type Category = z.infer<typeof CategorySchema>;
 export type Vibe = z.infer<typeof VibeSchema>;
 export type Venue = z.infer<typeof VenueSchema>;

@@ -99,3 +99,12 @@ describe("datos de demostración", () => {
     expect(new Set(events.map((e) => e.slug)).size).toBe(events.length);
   });
 });
+
+describe("fotos de los eventos", () => {
+  it("cada evento tiene su propia foto de Unsplash, sin repetir", async () => {
+    const events = await getEvents();
+    const urls = events.map((e) => e.photo?.url);
+    expect(urls.every((u) => u?.startsWith("https://images.unsplash.com/photo-"))).toBe(true);
+    expect(new Set(urls).size).toBe(events.length);
+  });
+});
