@@ -48,15 +48,15 @@ export async function VibeExplorer({ events, locale }: Props) {
         </Reveal>
 
         <Reveal delay={100}>
-          <ul className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none]">
+          <ul className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [mask-image:linear-gradient(to_right,black_88%,transparent)] [scrollbar-width:none] sm:grid sm:grid-cols-2 sm:overflow-visible sm:[mask-image:none] lg:grid-cols-4">
             {vibes.map(({ vibe, photoUrl, count }) => {
               const [c1, c2, c3] = vibe.palette;
               return (
-                <li key={vibe.id} className="shrink-0 snap-start">
-                  <Link href={`/events?vibe=${vibe.id}`} className="pulso-vibe group relative flex h-44 w-56 flex-col justify-end overflow-hidden rounded-2xl p-4 text-white shadow-lg shadow-black/30 transition duration-300 hover:-translate-y-1 hover:scale-[1.03]" style={{ background: `linear-gradient(135deg, ${c1}, ${c2} 55%, ${c3})` }}>
+                <li key={vibe.id} className="shrink-0 snap-start sm:shrink">
+                  <Link href={`/events?vibe=${vibe.id}`} className="pulso-vibe group relative flex h-44 w-56 flex-col sm:w-full justify-end overflow-hidden rounded-2xl p-4 text-white shadow-lg shadow-black/30 transition duration-300 hover:-translate-y-1 hover:scale-[1.03]" style={{ background: `linear-gradient(135deg, ${c1}, ${c2} 55%, ${c3})` }}>
                     {photoUrl && (
                       <>
-                        <Image src={`${photoUrl}?auto=format&fit=crop&w=500&q=70`} alt="" fill sizes="224px" className="object-cover transition duration-700 group-hover:scale-110" />
+                        <Image src={`${photoUrl}?auto=format&fit=crop&w=500&q=70`} alt="" fill sizes="(min-width: 1024px) 280px, (min-width: 640px) 50vw, 224px" className="object-cover transition duration-700 group-hover:scale-110" />
                         <div aria-hidden="true" className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${c1}8c, ${c2}59 55%, ${c3}33)` }} />
                       </>
                     )}
