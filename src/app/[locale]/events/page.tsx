@@ -1,46 +1,50 @@
-import { redirect } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
+import { EventsCatalog } from "@/components/events/EventsCatalog";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { AuthForm } from "@/components/auth/AuthForm";
-import { createClient } from "@/lib/supabase/server";
-import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { getEvents } from "@/lib/data";
+import type { Category } from "@/lib/schemas";
+
+const VALID_CATEGORIES: Category[] = ["music", "theater", "food", "nightlife", "art", "social"];
+
+// Misma razón que en /events/[slug]: esta página depende de query params
+// (?category=, ?vibe=, ?neighborhood=) y nunca debe quedar cacheada con
+// los filtros de una visita anterior.
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ category?: string; vibe?: string; neighborhood?: string }>;
 };
 
-export default async function AuthPage({ params }: Props) {
+export default async function EventsPage({ params, searchParams }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  if (!isSupabaseConfigured()) {
-    return (
-      <>
-        <Header />
-        <main className="mx-auto w-full max-w-6xl px-4 py-16 text-center text-white/60">
-          <p>El login todavía no está configurado.</p>
-        </main>
-      </>
-    );
-  }
+  const { category, vibe, neighborhood } = await searchParams;
+  const initialCategory = VALID_CATEGORIES.includes(category as Category)
+    ? (category as Category)
+    : null;
 
-  // Si ya tenés sesión, esta página no tiene nada que hacer.
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (user) redirect("/");
+  const t = await getTranslations("Events");
+  const events = await getEvents();
 
   return (
     <>
       <Header />
-      <main className="mx-auto w-full max-w-6xl px-4 py-16">
-        <div className="mx-auto mb-10 max-w-sm text-center">
-          <SectionHeading as="h1" className="text-3xl">Tu cuenta en Pulso BA</SectionHeading>
-          <p className="mt-2 text-white/60">Guardá favoritos, marcá a qué planes vas y dejá tu opinión sobre los eventos.</p>
-        </div>
-        <AuthForm />
+      <main className="mx-auto w-full max-w-6xl px-4 py-10">
+        <SectionHeading as="h1" className="text-3xl sm:text-4xl">
+          {t("title")}
+        </SectionHeading>
+        <p className="mt-2 mb-8 opacity-70">{t("subtitle")}</p>
+
+        <EventsCatalog
+          events={events}
+          locale={locale}
+          initialCategory={initialCategory}
+          initialVibeId={vibe ?? null}
+          initialNeighborhood={neighborhood ?? null}
+        />
       </main>
     </>
   );

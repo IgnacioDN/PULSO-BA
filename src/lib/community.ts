@@ -47,6 +47,9 @@ export async function getEventCommunityStats(eventId: string): Promise<EventComm
 
 async function loadStats(eventId: string): Promise<EventCommunityStats> {
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   const [favoriteCountRes, attendanceCountRes, reviewsRes, myFavoriteRes, myAttendanceRes] =
     await Promise.all([

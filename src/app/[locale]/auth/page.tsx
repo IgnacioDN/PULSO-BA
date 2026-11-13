@@ -3,7 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AuthForm } from "@/components/auth/AuthForm";
-import { createClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/supabase/user";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 type Props = {
@@ -26,10 +26,7 @@ export default async function AuthPage({ params }: Props) {
   }
 
   // Si ya tenés sesión, esta página no tiene nada que hacer.
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
   if (user) redirect("/");
 
   return (
