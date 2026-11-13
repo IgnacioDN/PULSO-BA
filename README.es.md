@@ -117,9 +117,9 @@ supabase/            schema.sql
 - **Eventos reales.** Todo es de demostración. La capa de datos está lista para leer de una base.
 - **Las reseñas guardan el email del autor.** La interfaz muestra solo las primeras letras, pero la columna es legible públicamente por la API. La solución es guardar un nombre para mostrar.
 
-## Una nota sobre cómo lo hice
+## Sobre mí
 
-Lo construí con Claude (un asistente de IA) como compañero de programación.
+Desarrollador frontend con React y TypeScript, con más de 3 años en ecommerce sobre Adobe Commerce (Magento). Mi pasado en QA se nota en cómo construyo: me importan los casos borde, la accesibilidad y los estados de error. Convierto diseños en interfaces responsive y reutilizables, y trabajo bien con equipos de diseño y negocio. Pulso BA es mi proyecto más reciente: una app full-stack en Next.js con login, búsqueda con IA y base de datos.
 
 ## Licencia
 

@@ -117,9 +117,9 @@ supabase/            schema.sql
 - **Real events.** Everything is demo data. The data layer is ready to read from a database.
 - **Reviews store the author's email.** The UI only shows the first letters, but the column is publicly readable through the API. The fix is to store a display name instead.
 
-## A note on how it was built
+## About me
 
-I built this with Claude (an AI assistant) as a pair programmer.
+Frontend developer with React and TypeScript, with 3+ years working in ecommerce on Adobe Commerce (Magento). My QA background shows in how I build: I care about edge cases, accessibility and failure states. I turn designs into responsive, reusable interfaces and work well with design and business teams. Pulso BA is my latest project: a full-stack Next.js app with auth, AI search and a database.
 
 ## License
 
