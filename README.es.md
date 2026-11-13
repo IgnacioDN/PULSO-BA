@@ -4,7 +4,13 @@ Una guía de lo que pasa en Buenos Aires (música, teatro, gastronomía, noche, 
 
 **Demo en vivo:** https://pulso-ba.vercel.app  ·  [English version](README.md)
 
-> Los eventos y lugares son datos de demostración inventados. Las fotos son de Unsplash (créditos en `src/lib/photoCredits.ts`).
+> Los eventos y lugares son datos de demostración inventados. Las fotos son de Unsplash (créditos en los datos de cada evento y en `src/lib/photoCredits.ts`).
+
+![Home con la búsqueda en lenguaje natural](docs/screenshots/home.jpg)
+
+| Explorá por vibra | Lugares en el mapa |
+| --- | --- |
+| ![Tarjetas de vibras](docs/screenshots/vibes.jpg) | ![Mapa de lugares](docs/screenshots/map.jpg) |
 
 ## Por qué lo hice
 

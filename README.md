@@ -4,7 +4,13 @@ A guide to what's happening in Buenos Aires (music, theater, food, nightlife, ar
 
 **Live demo:** https://pulso-ba.vercel.app  ·  [Versión en español](README.es.md)
 
-> The events and venues are made-up demo data. Photos come from Unsplash (credits in `src/lib/photoCredits.ts`).
+> The events and venues are made-up demo data. Photos come from Unsplash (credits in each event's data and in `src/lib/photoCredits.ts`).
+
+![Home with the natural-language search](docs/screenshots/home.jpg)
+
+| Explore by vibe | Venues on the map |
+| --- | --- |
+| ![Vibe cards](docs/screenshots/vibes.jpg) | ![Map of venues](docs/screenshots/map.jpg) |
 
 ## Why I built it
 
