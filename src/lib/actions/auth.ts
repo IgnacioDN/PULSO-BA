@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
@@ -25,8 +26,17 @@ export async function signUp(_prevState: AuthResult, formData: FormData): Promis
 
   let hasSession = false;
   try {
+    // El link del mail de confirmación tiene que volver a ESTE sitio (no a
+    // localhost): lo armamos con la dirección desde la que se envió el form.
+    const requestHeaders = await headers();
+    const origin = requestHeaders.get("origin");
+
     const supabase = await createClient();
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: origin ? { emailRedirectTo: `${origin}/api/auth/callback` } : undefined,
+    });
     if (error) {
       return { error: translateAuthError(error.message) };
     }

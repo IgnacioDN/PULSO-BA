@@ -8,10 +8,14 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 type Props = {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ error?: string }>;
 };
 
-export default async function AuthPage({ params }: Props) {
+const CONFIRMATION_NOTICE = "No pudimos iniciar tu sesión desde el link del mail. Si ya confirmaste tu email, iniciá sesión acá con tu email y contraseña.";
+
+export default async function AuthPage({ params, searchParams }: Props) {
   const { locale } = await params;
+  const { error } = await searchParams;
   setRequestLocale(locale);
 
   if (!isSupabaseConfigured()) {
@@ -37,7 +41,7 @@ export default async function AuthPage({ params }: Props) {
           <SectionHeading as="h1" className="text-3xl">Tu cuenta en Pulso BA</SectionHeading>
           <p className="mt-2 text-white/60">Guardá favoritos, marcá a qué planes vas y dejá tu opinión sobre los eventos.</p>
         </div>
-        <AuthForm />
+        <AuthForm notice={error === "confirmacion" ? CONFIRMATION_NOTICE : undefined} />
       </main>
     </>
   );

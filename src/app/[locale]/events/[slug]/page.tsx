@@ -9,7 +9,7 @@ import { formatEventDate, formatPrice, localize } from "@/lib/format";
 import { photoCredits } from "@/lib/photoCredits";
 import { VenueMap } from "@/components/map/VenueMap";
 import { ToggleButton } from "@/components/events/ToggleButton";
-import { ReviewForm } from "@/components/events/ReviewForm";
+import { ReviewsSection } from "@/components/events/ReviewsSection";
 import { getEventCommunityStats } from "@/lib/community";
 import { toggleFavorite, toggleAttendance, submitReview } from "@/lib/actions/community";
 import { getCurrentUser } from "@/lib/supabase/user";
@@ -104,41 +104,8 @@ export default async function EventDetailPage({ params }: Props) {
                 <VenueMap venues={[event.venue]} center={{ lat: event.venue.lat, lng: event.venue.lng }} zoom={15} className={MAP_CLASS} />
               </div>
 
-              {/* Comunidad: solo aparece si Supabase está configurado — si no,
-                  no tiene sentido mostrar una sección sin datos reales. */}
-              {supabaseOn && (
-                <div className="mt-10 border-t border-white/10 pt-8">
-                  <div className="mb-5 flex items-center gap-3">
-                    <p className="text-sm font-semibold opacity-70">Reseñas</p>
-                    {stats.averageRating !== null && (
-                      <span className="text-sm text-white/60">★ {stats.averageRating.toFixed(1)} · {stats.reviews.length} {stats.reviews.length === 1 ? "reseña" : "reseñas"}</span>
-                    )}
-                  </div>
-
-                  <div className="mb-8">
-                    <ReviewForm action={boundSubmitReview} loggedIn={loggedIn} initialRating={stats.myReview?.rating ?? 0} initialBody={stats.myReview?.body ?? ""} />
-                  </div>
-
-                  {stats.reviews.length > 0 ? (
-                    <ul className="space-y-4">
-                      {stats.reviews.map((review) => (
-                        <li key={review.id} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                          <div className="mb-1 flex items-center justify-between gap-2">
-                            <span className="truncate text-sm font-medium text-white/80">{review.authorEmail}</span>
-                            <span className="shrink-0 text-sm text-brand-celeste">
-                              {"★".repeat(review.rating)}
-                              <span className="text-white/20">{"★".repeat(5 - review.rating)}</span>
-                            </span>
-                          </div>
-                          <p className="text-sm text-white/70">{review.body}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-white/50">Todavía no hay reseñas. ¡Dejá la primera!</p>
-                  )}
-                </div>
-              )}
+              {/* Comunidad: solo aparece si Supabase está configurado. */}
+              {supabaseOn && <ReviewsSection stats={stats} action={boundSubmitReview} loggedIn={loggedIn} locale={locale} />}
             </div>
 
             {/* Ficha de datos: fecha, lugar y precio, siempre visibles al costado. */}

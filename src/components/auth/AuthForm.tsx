@@ -17,7 +17,7 @@ const TAB_INACTIVE = "flex-1 rounded-full px-4 py-2 text-sm font-medium transiti
  * Las dos Server Actions (signIn/signUp) devuelven {error} en vez de tirar
  * una excepción, así que el mensaje de error queda prolijo y en español.
  */
-export function AuthForm() {
+export function AuthForm({ notice }: { notice?: string }) {
   const [mode, setMode] = useState<Mode>("login");
   const [loginState, loginAction, loginPending] = useActionState(signIn, initialState);
   const [signupState, signupAction, signupPending] = useActionState(signUp, initialState);
@@ -32,6 +32,10 @@ export function AuthForm() {
         <button type="button" onClick={() => setMode("login")} className={mode === "login" ? TAB_ACTIVE : TAB_INACTIVE}>Iniciar sesión</button>
         <button type="button" onClick={() => setMode("signup")} className={mode === "signup" ? TAB_ACTIVE : TAB_INACTIVE}>Crear cuenta</button>
       </div>
+
+      {notice && (
+        <p role="status" className="mb-4 rounded-lg bg-amber-500/10 px-3 py-2 text-sm text-amber-200">{notice}</p>
+      )}
 
       <form action={action} className="space-y-4">
         <div>
