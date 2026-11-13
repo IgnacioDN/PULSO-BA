@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatPrice, localize } from "./format";
+import { formatEventParts, formatPrice, localize } from "./format";
 
 describe("localize", () => {
   const field = { es: "Hola", en: "Hello" };
@@ -21,5 +21,18 @@ describe("formatPrice", () => {
 
   it("muestra un rango si difieren", () => {
     expect(formatPrice({ min: 5000, max: 10000 }, "es", "Gratis")).toContain("–");
+  });
+});
+
+describe("formatEventParts", () => {
+  it("parte la fecha en día, fecha y hora de Buenos Aires", () => {
+    const parts = formatEventParts("2026-11-13T23:30:00-03:00", "es");
+    expect(parts.weekday.toLowerCase()).toBe("vie");
+    expect(parts.date).toMatch(/13/);
+    expect(parts.time).toBe("23:30");
+  });
+
+  it("usa la zona horaria de Buenos Aires aunque la fecha venga en UTC", () => {
+    expect(formatEventParts("2026-11-14T02:30:00Z", "es").time).toBe("23:30");
   });
 });

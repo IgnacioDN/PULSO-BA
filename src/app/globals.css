@@ -146,3 +146,111 @@ input:focus-visible,
 textarea:focus-visible {
   outline: none;
 }
+/*
+ * Cintillo "Encontrá tu evento": el texto se repite dos veces y la pista
+ * avanza justo la mitad de su ancho, así el loop no tiene salto visible.
+ */
+@keyframes pulso-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.pulso-marquee-track {
+  animation: pulso-marquee 32s linear infinite;
+}
+
+.pulso-marquee:hover .pulso-marquee-track {
+  animation-play-state: paused;
+}
+
+/* Brillo diagonal que cruza la tarjeta al pasar el mouse. */
+.pulso-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.pulso-card:hover .pulso-shine {
+  transition: transform 0.9s ease;
+  transform: translateX(120%);
+}
+
+/* Las vibras respiran: el degradé se desplaza despacio y cada tarjeta a su ritmo. */
+@keyframes pulso-gradient {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.pulso-vibe {
+  background-size: 200% 200%;
+  animation: pulso-gradient 9s ease-in-out infinite;
+}
+
+.pulso-vibe:nth-child(even) {
+  animation-duration: 12s;
+  animation-direction: reverse;
+}
+
+/* Subrayado de marca que se dibuja debajo de los títulos de sección. */
+@keyframes pulso-underline {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.pulso-heading::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 3.5rem;
+  margin-top: 0.5rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-celeste), transparent);
+  transform-origin: left;
+  animation: pulso-underline 0.9s 0.25s ease-out both;
+}
+
+/* Números de "Cómo funciona": un latido suave, uno detrás del otro. */
+@keyframes pulso-beat {
+  0%,
+  100% {
+    transform: scale(1);
+    text-shadow: 0 0 0 rgba(56, 189, 248, 0);
+  }
+  50% {
+    transform: scale(1.12);
+    text-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+  }
+}
+
+.pulso-step-number {
+  display: inline-block;
+  transform-origin: left center;
+  animation: pulso-beat 3.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulso-marquee-track,
+  .pulso-vibe,
+  .pulso-heading::after,
+  .pulso-step-number {
+    animation: none;
+  }
+  .pulso-card:hover .pulso-shine {
+    transition: none;
+  }
+}

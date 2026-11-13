@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
 import { Hero } from "@/components/home/Hero";
+import { MarqueeBand } from "@/components/ui/MarqueeBand";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { VibeExplorer } from "@/components/home/VibeExplorer";
 import { EventCard } from "@/components/events/EventCard";
@@ -29,6 +30,7 @@ export default async function HomePage({ params }: Props) {
     <>
       <Header />
       <Hero events={events} locale={locale} />
+      <MarqueeBand />
       <HowItWorks />
       <VibeExplorer events={events} locale={locale} />
 
@@ -43,7 +45,7 @@ export default async function HomePage({ params }: Props) {
           return (
             <section key={category} id={category} className="mb-14 scroll-mt-20">
               <Reveal>
-                <SectionHeading className="mb-4 text-xl">{tCategories(category)}</SectionHeading>
+                <SectionHeading className="pulso-heading mb-6 text-2xl">{tCategories(category)}</SectionHeading>
               </Reveal>
               <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {preview.map((event, i) => (

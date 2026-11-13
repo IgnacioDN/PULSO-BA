@@ -35,3 +35,16 @@ export function formatPrice(
     ? fmt.format(range.min)
     : `${fmt.format(range.min)} – ${fmt.format(range.max)}`;
 }
+
+/** La fecha partida en piezas (día, fecha, hora) para armar tarjetas tipo cartelera. */
+export function formatEventParts(iso: string, locale: string): { weekday: string; date: string; time: string } {
+  const date = new Date(iso);
+  const part = (options: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat(locale, { ...options, timeZone: TIME_ZONE }).format(date);
+
+  return {
+    weekday: part({ weekday: "short" }).replace(".", ""),
+    date: part({ day: "numeric", month: "short" }).replace(".", ""),
+    time: part({ hour: "2-digit", minute: "2-digit", hour12: false }),
+  };
+}

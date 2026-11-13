@@ -36,7 +36,7 @@ export async function VibeExplorer({ events, locale }: Props) {
     <section className="border-b border-white/10">
       <div className="mx-auto w-full max-w-6xl px-4 py-14">
         <Reveal>
-          <SectionHeading as="h2" className="text-2xl sm:text-3xl">
+          <SectionHeading as="h2" className="pulso-heading text-2xl sm:text-3xl">
             {t("title")}
           </SectionHeading>
           <p className="mt-2 text-white/60">{t("subtitle")}</p>
@@ -48,8 +48,8 @@ export async function VibeExplorer({ events, locale }: Props) {
               const [c1, c2, c3] = vibe.palette;
               return (
                 <li key={vibe.id} className="shrink-0 snap-start">
-                  <Link href={`/events?vibe=${vibe.id}`} className="flex h-28 w-44 flex-col justify-end rounded-2xl p-4 text-white transition hover:-translate-y-0.5" style={{ background: `linear-gradient(135deg, ${c1}, ${c2} 55%, ${c3})` }}>
-                    <span className="text-sm font-semibold leading-snug drop-shadow-sm">
+                  <Link href={`/events?vibe=${vibe.id}`} className="pulso-vibe flex h-32 w-48 flex-col justify-end rounded-2xl p-4 text-white shadow-lg shadow-black/30 transition duration-300 hover:-translate-y-1 hover:scale-[1.03]" style={{ background: `linear-gradient(135deg, ${c1}, ${c2} 55%, ${c3})` }}>
+                    <span className="text-base font-bold leading-snug drop-shadow">
                       {localize(vibe.label, locale)}
                     </span>
                   </Link>

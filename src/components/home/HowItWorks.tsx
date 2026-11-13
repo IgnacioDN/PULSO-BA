@@ -15,7 +15,7 @@ export async function HowItWorks() {
     <section className="border-b border-white/10 bg-white/[0.02]">
       <div className="mx-auto w-full max-w-6xl px-4 py-14">
         <Reveal>
-          <SectionHeading as="h2" className="text-2xl sm:text-3xl">
+          <SectionHeading as="h2" className="pulso-heading text-2xl sm:text-3xl">
             {t("title")}
           </SectionHeading>
           <p className="mt-2 text-white/60">{t("subtitle")}</p>
@@ -27,12 +27,12 @@ export async function HowItWorks() {
               <li className="flex flex-col gap-2">
                 <span
                   aria-hidden="true"
-                  className="font-display text-3xl font-bold text-brand-celeste/80"
+                  className="pulso-step-number font-display text-4xl font-bold text-brand-celeste"
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="text-lg font-semibold">{step.title}</h3>
-                <p className="text-white/60">{step.body}</p>
+                <p className="text-white/75">{step.body}</p>
               </li>
             </Reveal>
           ))}

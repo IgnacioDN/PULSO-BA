@@ -108,5 +108,16 @@
     "subtitle": "Todos los lugares de la agenda, en el plano.",
     "listTitle": "Lugares",
     "viewEvents": "Ver eventos acá →"
+  },
+  "Marquee": {
+    "cta": "Encontrá tu evento",
+    "words": [
+      "Música",
+      "Teatro",
+      "Gastronomía",
+      "Noche",
+      "Arte",
+      "Social"
+    ]
   }
 }
