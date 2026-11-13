@@ -44,8 +44,12 @@ export function AuthForm() {
           <input id="password" name="password" type="password" required minLength={6} autoComplete={mode === "login" ? "current-password" : "new-password"} className={INPUT_CLASS} />
         </div>
 
-        {state?.error && (
+        {state && "error" in state && (
           <p role="alert" className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300">{state.error}</p>
+        )}
+
+        {state && "info" in state && (
+          <p role="status" className="rounded-lg bg-emerald-500/10 px-3 py-2 text-sm text-emerald-300">{state.info}</p>
         )}
 
         <Button type="submit" disabled={pending} className="w-full text-center">
