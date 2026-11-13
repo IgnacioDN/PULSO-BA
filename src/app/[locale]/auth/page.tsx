@@ -11,7 +11,10 @@ type Props = {
   searchParams: Promise<{ error?: string }>;
 };
 
-const CONFIRMATION_NOTICE = "No pudimos iniciar tu sesión desde el link del mail. Si ya confirmaste tu email, iniciá sesión acá con tu email y contraseña.";
+const NOTICES: Record<string, string> = {
+  confirmacion: "No pudimos iniciar tu sesión desde el link del mail. Si ya confirmaste tu email, iniciá sesión acá con tu email y contraseña.",
+  recuperacion: "El link para cambiar la contraseña venció, ya se usó o se abrió en otro navegador. Tocá \"¿Olvidaste tu contraseña?\" para pedir uno nuevo.",
+};
 
 export default async function AuthPage({ params, searchParams }: Props) {
   const { locale } = await params;
@@ -41,7 +44,7 @@ export default async function AuthPage({ params, searchParams }: Props) {
           <SectionHeading as="h1" className="text-3xl">Tu cuenta en Pulso BA</SectionHeading>
           <p className="mt-2 text-white/60">Guardá favoritos, marcá a qué planes vas y dejá tu opinión sobre los eventos.</p>
         </div>
-        <AuthForm notice={error === "confirmacion" ? CONFIRMATION_NOTICE : undefined} />
+        <AuthForm notice={error ? NOTICES[error] : undefined} />
       </main>
     </>
   );

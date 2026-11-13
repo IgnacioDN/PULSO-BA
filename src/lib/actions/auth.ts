@@ -77,6 +77,72 @@ export async function signIn(_prevState: AuthResult, formData: FormData): Promis
   redirect("/");
 }
 
+/**
+ * Pide el mail para elegir una contraseña nueva. Siempre responde lo mismo
+ * exista o no la cuenta: así nadie puede usar este formulario para averiguar
+ * qué emails están registrados.
+ */
+export async function requestPasswordReset(_prevState: AuthResult, formData: FormData): Promise<AuthResult> {
+  const email = String(formData.get("email") ?? "").trim();
+
+  if (!email) {
+    return { error: "Escribí tu email." };
+  }
+
+  try {
+    const requestHeaders = await headers();
+    const origin = requestHeaders.get("origin");
+
+    const supabase = await createClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      // El callback canjea el código del mail por una sesión y después nos
+      // lleva a la pantalla donde se elige la contraseña nueva.
+      redirectTo: origin ? `${origin}/api/auth/callback?next=/auth/reset` : undefined,
+    });
+    if (error) {
+      return { error: translateAuthError(error.message) };
+    }
+  } catch (err) {
+    console.error("[auth] requestPasswordReset falló:", err);
+    return { error: unexpectedError(err) };
+  }
+
+  return { info: "Si hay una cuenta con ese email, te mandamos un link para elegir una contraseña nueva. Revisá tu bandeja de entrada (y el spam)." };
+}
+
+/** Guarda la contraseña nueva. Solo funciona con la sesión que abre el link del mail. */
+export async function updatePassword(_prevState: AuthResult, formData: FormData): Promise<AuthResult> {
+  const password = String(formData.get("password") ?? "");
+  const confirm = String(formData.get("confirm") ?? "");
+
+  if (password.length < 6) {
+    return { error: "La contraseña tiene que tener al menos 6 caracteres." };
+  }
+  if (password !== confirm) {
+    return { error: "Las contraseñas no coinciden." };
+  }
+
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      return { error: "El link venció o ya se usó. Pedí uno nuevo desde el inicio de sesión." };
+    }
+
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) {
+      return { error: translateAuthError(error.message) };
+    }
+  } catch (err) {
+    console.error("[auth] updatePassword falló:", err);
+    return { error: unexpectedError(err) };
+  }
+
+  redirect("/");
+}
+
 export async function signOut() {
   try {
     const supabase = await createClient();
@@ -96,6 +162,7 @@ function translateAuthError(message: string): string {
     "Email not confirmed": "Todavía no confirmaste tu email: revisá tu bandeja de entrada.",
     "Signups not allowed for this instance": "El registro de cuentas está desactivado en este momento.",
     "Anonymous sign-ins are disabled": "Completá el email y la contraseña.",
+    "New password should be different from the old password.": "La contraseña nueva tiene que ser distinta a la anterior.",
   };
   if (known[message]) return known[message];
 

@@ -11,6 +11,11 @@ export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
 
+  // A dónde ir después (por ejemplo, la pantalla de contraseña nueva). Solo
+  // se aceptan rutas internas: "//otro-sitio.com" sería un redirect abierto.
+  const nextParam = searchParams.get("next");
+  const next = nextParam && nextParam.startsWith("/") && !nextParam.startsWith("//") ? nextParam : "/";
+
   // Detrás del proxy de Vercel, la dirección pública viene en este header.
   const forwardedHost = request.headers.get("x-forwarded-host");
   const base = forwardedHost ? `https://${forwardedHost}` : origin;
@@ -19,12 +24,12 @@ export async function GET(request: NextRequest) {
     try {
       const supabase = await createClient();
       const { error } = await supabase.auth.exchangeCodeForSession(code);
-      if (!error) return NextResponse.redirect(`${base}/`);
+      if (!error) return NextResponse.redirect(`${base}${next}`);
       console.error("[auth] exchangeCodeForSession falló:", error.message);
     } catch (err) {
       console.error("[auth] callback falló:", err);
     }
   }
 
-  return NextResponse.redirect(`${base}/auth?error=confirmacion`);
+  return NextResponse.redirect(`${base}/auth?error=${next === "/auth/reset" ? "recuperacion" : "confirmacion"}`);
 }
